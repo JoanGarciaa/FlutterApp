@@ -31,17 +31,28 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_svg: 2.0.4
-
+  firebase_core: ^2.9.0
+  cloud_firestore: ^4.5.0
+  provider: any
+  font_awesome_flutter: ^9.0.0
+  flutter_awesome_buttons: ^1.1.0
+  fluttertoast: ^8.1.2
+  auto_route: ^5.0.4
+  http: ^0.13.5
+  json_serializable: ^6.6.1
+  google_sign_in: ^5.0.3
+  firebase_auth: any
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   html: ^0.15.2
-  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -78,10 +89,10 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
 #  fonts:
-    - family: Poppins
-      fonts:
-        - asset: fonts/Poppins-Italic.tff
-          weight: 700
+#    - family: Poppins
+#      fonts:
+#        - asset: fonts/Poppins-Italic.tff
+#          weight: 700
 #        - asset: fonts/Poppins-Ligth.tff
 #          weight: 400
 #        - asset: fonts/Poppins-Bold.tff
