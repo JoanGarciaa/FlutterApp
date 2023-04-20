@@ -9,6 +9,7 @@ class CustomRoundedButtonWithIcon extends StatelessWidget {
   final String title;
   final Function onPressed;
   final IconData icon;
+  final double size;
   const CustomRoundedButtonWithIcon(
       {Key? key,
         this.radius,
@@ -17,7 +18,7 @@ class CustomRoundedButtonWithIcon extends StatelessWidget {
         this.buttonColor,
         required this.title,
         required this.onPressed,
-        required this.icon})
+        required this.icon, required this.size})
       : super(key: key);
 
   @override
@@ -27,6 +28,7 @@ class CustomRoundedButtonWithIcon extends StatelessWidget {
       onTap: onPressed as void Function()?,
       splashColor: splashColor ?? Colors.blue,
       child: Ink(
+        width: size,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(radius ?? 50),
             border: Border.all(color: Colors.black),
