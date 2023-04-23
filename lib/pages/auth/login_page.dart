@@ -110,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                             .then((_) {
                           if (Auth().currentUser?.emailVerified == true) {
                             Navigator.pushNamed(context, '/');
-                            toast("Bienvenido ${_controllerPassword.text}");
+                            toast("Bienvenido ${_controllerEmail.text}");
                             _controllerEmail.clear();
                             _controllerPassword.clear();
                           } else {

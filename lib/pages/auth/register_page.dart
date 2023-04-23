@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_app/fonts/fonts.dart';
 import 'package:flutter_app/global_widgets/custom_rounded_button.dart';
 import 'package:flutter_app/services/firebase_services.dart';
 import 'package:flutter_awesome_buttons/flutter_awesome_buttons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_app/models/user_data.dart';
 
 import '../../services/auth.dart';
 
@@ -27,6 +29,8 @@ class _RegisterPageState extends State<RegisterPage> {
   String? _selectedGender = 'Hombre';
   List<String> _genders = ['Hombre', 'Mujer', 'Otro'];
 
+  late UserData user_data;
+
   void toast(String message) {
     Fluttertoast.showToast(
         msg: message,
@@ -40,7 +44,6 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.mainColor,
       appBar: AppBar(
         title: const Text(
           "AutoSpecs",
@@ -68,7 +71,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Text(
                 'REGISTRO',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 30, letterSpacing: 2),
+                style: TextStyle(fontSize: 30, letterSpacing: 2,fontFamily: AppFonts.roboto),
               )),
             ),
             Container(
@@ -84,7 +87,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         focusedBorder: OutlineInputBorder(
                             borderSide:
                                 BorderSide(color: Colors.terciaryColor)),
-                        hintText: 'Correo electronico'),
+                        labelText: "Correo electronico",
+                        labelStyle: TextStyle(color: Colors.grey)),
                   ),
                   const SizedBox(
                     height: 10,
@@ -96,8 +100,11 @@ class _RegisterPageState extends State<RegisterPage> {
                         border: OutlineInputBorder(),
                         focusedBorder: OutlineInputBorder(
                             borderSide:
-                                BorderSide(color: Colors.terciaryColor)),
-                        hintText: 'Contraseña'),
+                                BorderSide(color: Colors.terciaryColor),
+                        ),
+                        labelText: "Contraseña",
+                        labelStyle: TextStyle(color: Colors.grey)
+                    ),
                   ),
                   const SizedBox(
                     height: 10,
@@ -109,7 +116,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         focusedBorder: OutlineInputBorder(
                             borderSide:
                                 BorderSide(color: Colors.terciaryColor)),
-                        hintText: 'Nombre de usuario'),
+                        labelText: "Nombre de usuario",
+                        labelStyle: TextStyle(color: Colors.grey)),
                   ),
                 ],
               ),
@@ -130,7 +138,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           focusedBorder: OutlineInputBorder(
                               borderSide:
                               BorderSide(color: Colors.terciaryColor)),
-                          hintText: 'Edad'),
+                          labelText: "Edad",
+                          labelStyle: TextStyle(color: Colors.grey)),
                     ),
                   ),
                   const SizedBox(width: 40),
@@ -146,6 +155,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                       child: DropdownButton<String>(
+                        underline: Container(),
                           value: _selectedGender,
                           items: _genders.map((String gender) {
                             return DropdownMenuItem<String>(
@@ -181,7 +191,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             _controllerEmail.text, _controllerPassword.text)
                             .then((_) {
                           Auth().sendEmailVerification();
-                          createUserDB(_controllerEmail.text, _controllerPassword.text, _controllerUsername.text, _controllerYears.text,_selectedGender!);
+                          user_data = UserData(email:_controllerEmail.text,password:_controllerPassword.text,sex:_selectedGender!,username:_controllerUsername.text,years:int.parse(_controllerYears.text),favorite_cars:[], image: "https://cdn.autobild.es/sites/navi.axelspringer.es/public/media/image/2018/01/mazda-rx-7_4.jpg");
+                          createUserDB(user_data);
                           toast("Registro con éxito");
                           Navigator.pushNamed(context, '/login');
                         });

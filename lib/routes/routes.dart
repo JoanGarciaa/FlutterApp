@@ -7,6 +7,12 @@ abstract class Routes{
   static const REGISTER = "/register";
   // ignore: constant_identifier_names
   static const LOGIN = "/login";
+  // ignore: constant_identifier_names
+  static const FAVORITES = "/favorites";
+  // ignore: constant_identifier_names
+  static const PROFILE = "/profile";
+  // ignore: constant_identifier_names
+  static const INFOCAR = "/info_car";
 
 
 }
