@@ -87,6 +87,15 @@ class HomeDrawer extends StatelessWidget {
               addCar();
             },
           ),
+          ListTile(
+            leading: Icon(Icons.exit_to_app,color: Colors.terciaryColor,),
+            title: const Text('el teu cap'),
+            onTap: ()async {
+
+              await getMyFavoriteCars();
+
+            },
+          ),
         ],
       );
 }

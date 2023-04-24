@@ -194,7 +194,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           user_data = UserData(email:_controllerEmail.text,password:_controllerPassword.text,sex:_selectedGender!,username:_controllerUsername.text,years:int.parse(_controllerYears.text),favorite_cars:[], image: "https://cdn.autobild.es/sites/navi.axelspringer.es/public/media/image/2018/01/mazda-rx-7_4.jpg");
                           createUserDB(user_data);
                           toast("Registro con éxito");
-                          Navigator.pushNamed(context, '/login');
+                          Navigator.pushReplacementNamed(context, '/login');
                         });
                       }catch(error){
                         print(error);
@@ -212,7 +212,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   CustomRoundedButtonWithIcon(
                     buttonColor: Colors.mainColor,
                     onPressed: () async {
-                      Navigator.pushNamed(context, '/login');
+                      Navigator.pushReplacementNamed(context, '/login');
                     },
                     splashColor: Colors.terciaryColor,
                     title: 'Login',

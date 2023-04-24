@@ -1,9 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/pages/auth/register_page.dart';
+import 'package:flutter_app/pages/favorites/favorites_page.dart';
 import 'package:flutter_app/pages/home/home_page.dart';
 import 'package:flutter_app/pages/auth/login_page.dart';
 import 'package:flutter_app/pages/home/info_cars/info_car.dart';
+import 'package:flutter_app/pages/home/search_car/search_car.dart';
 import 'package:flutter_app/pages/profile/profile_page.dart';
 import 'package:flutter_app/provider/google_sign_in.dart';
 import 'package:provider/provider.dart';
@@ -43,6 +45,8 @@ class MyApp extends StatelessWidget {
           '/register': (context) => RegisterPage(),
           '/info-car': (context) => InfoCarPage(),
           '/profile': (context) => ProfilePage(),
+          '/favorites': (context) => FavoritesPage(),
+          '/search': (context) => SearchCarPage(),
         },
       ));
 }

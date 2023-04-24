@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user_data.dart';
 import 'package:flutter_app/services/firebase_services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import '../../../drawer/drawer_menu.dart';
 import '../../../fonts/fonts.dart';
 import '../../../models/car.dart';
@@ -16,18 +17,24 @@ class SearchCarPage extends StatefulWidget {
 class _SearchCarPageState extends State<SearchCarPage> {
   bool _isClicked = false;
   UserData? user;
+  int currentIndex = 2;
+  String? itemSelected = "";
+  List<Car>? cars =[];
+  final TextEditingController _controllerBrand = TextEditingController();
+
   static const List<String> list = <String>[
-    'audi',
-    'bmw',
-    'ford',
-    'ferrari',
-    'lexus',
-    'lamborguini',
-    'mclaren',
-    'mercedes',
-    'nissan',
-    'porsche',
-    'volkswagen'
+    'Ver todos',
+    'Audi',
+    'BMW',
+    'Ford',
+    'Ferrari',
+    'Lexus',
+    'Lamborguini',
+    'Mclaren',
+    'Mercedes',
+    'Nissan',
+    'Porsche',
+    'Volkswagen'
   ];
 
   void _handleClick() {
@@ -39,6 +46,30 @@ class _SearchCarPageState extends State<SearchCarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: GNav(
+        gap: 8,
+        tabBackgroundColor: Colors.mainColor,
+        tabs: const [
+          GButton(icon: Icons.home,text: 'Home',),
+          GButton(icon: Icons.favorite,text: 'Favoritos'),
+          GButton(icon: Icons.search,text: 'Buscar', ),
+          GButton(icon: Icons.person,text: 'Perfil',),
+        ],
+        selectedIndex: currentIndex,
+        onTabChange: (index){
+          setState(() {
+            currentIndex = index;
+          });
+          if(currentIndex == 0){
+            Navigator.pushReplacementNamed(context, '/');
+          }if(currentIndex == 1){
+            Navigator.pushReplacementNamed(context, '/favorites');
+          }if(currentIndex == 3){
+            Navigator.pushReplacementNamed(context, '/profile');
+          }
+        },
+      ),
+        drawer: const HomeDrawer(),
         appBar: AppBar(
           title: const Text(
             "AutoSpecs",
@@ -61,7 +92,7 @@ class _SearchCarPageState extends State<SearchCarPage> {
                   if(textEditingValue == ''){
                     return const Iterable<String>.empty();
                   }return list.where((String item){
-                    return item.contains(textEditingValue.text.toLowerCase());
+                    return item.contains(textEditingValue.text);
                   });
                 },
                 optionsViewBuilder: (BuildContext context,
@@ -114,19 +145,22 @@ class _SearchCarPageState extends State<SearchCarPage> {
                     ),
                   );
                 },
-                onSelected: (String item){
-                  print(item);
+                onSelected: (item){
+                  setState(() {
+                    itemSelected = item;
+                  });
+                  cars?.clear();
+                  print(itemSelected);
                 },
               ),
             ),
             Container(
-                height: 510,
-                width: 700,
+                height: 600,
                 child: FutureBuilder(
-                  future: getAllCars(),
+                  future: getAllCarsForSearch(itemSelected),
                   builder: ((context, snapshot) {
                     if (snapshot.hasData) {
-                      List<Car>? cars = snapshot.data;
+                      cars = snapshot.data;
                       return ListView.builder(
                         itemCount: cars?.length,
                         shrinkWrap: true,
@@ -139,16 +173,16 @@ class _SearchCarPageState extends State<SearchCarPage> {
                               onTap: () async {
                                 // getCar(snapshot.data?[index]['uid']);
                                 print("HOOL");
-                                await Navigator.pushNamed(context, '/info-car',
+                                await Navigator.pushReplacementNamed(context, '/info-car',
                                     arguments: {
-                                      "brand": cars[index].brand,
-                                      "model": cars[index].model,
-                                      "image": cars[index].image,
-                                      "max_speed": cars[index].max_speed,
-                                      "fuel": cars[index].fuel,
-                                      "cv": cars[index].cv,
-                                      "engine": cars[index].engine,
-                                      "id": cars[index].id,
+                                      "brand": cars![index].brand,
+                                      "model": cars![index].model,
+                                      "image": cars![index].image,
+                                      "max_speed": cars![index].max_speed,
+                                      "fuel": cars![index].fuel,
+                                      "cv": cars![index].cv,
+                                      "engine": cars![index].engine,
+                                      "id": cars![index].id,
                                     });
                                 setState(() {});
                               },
@@ -159,7 +193,7 @@ class _SearchCarPageState extends State<SearchCarPage> {
                                   borderRadius: BorderRadius.circular(10),
                                   image: DecorationImage(
                                     image: NetworkImage(
-                                        cars[index].image),
+                                        cars![index].image),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -170,7 +204,7 @@ class _SearchCarPageState extends State<SearchCarPage> {
                                     Padding(
                                       padding: const EdgeInsets.all(16.0),
                                       child: Text(
-                                        cars[index].brand,
+                                        cars![index].brand,
                                         style: const TextStyle(
                                             fontSize: 24,
                                             color: Colors.white,
@@ -185,7 +219,7 @@ class _SearchCarPageState extends State<SearchCarPage> {
                                         children: [
                                           Expanded(
                                             child: Text(
-                                              cars[index].model,
+                                              cars![index].model,
                                               style: const TextStyle(
                                                   fontSize: 16,
                                                   color: Colors.black),
@@ -195,7 +229,7 @@ class _SearchCarPageState extends State<SearchCarPage> {
                                             child: Icon(Icons.favorite, color: _isClicked? Colors.red:Colors.grey,),
                                             onTap: () {
                                               _handleClick();
-                                              favoriteCar(cars[index].id,user?.email);
+                                              favoriteCar(cars![index].id,user?.email);
                                             },
                                           )
                                         ],

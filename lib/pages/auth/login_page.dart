@@ -88,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                   Expanded(
                     child: CustomRoundedButtonWithIcon(
                       onPressed: () async {
-                        Navigator.pushNamed(context, '/register');
+                        Navigator.pushReplacementNamed(context, '/register');
                       },
                       title: 'REGISTRAME',
                       icon: Icons.app_registration,
@@ -109,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
                                 _controllerEmail.text, _controllerPassword.text)
                             .then((_) {
                           if (Auth().currentUser?.emailVerified == true) {
-                            Navigator.pushNamed(context, '/');
+                            Navigator.pushReplacementNamed(context, '/');
                             toast("Bienvenido ${_controllerEmail.text}");
                             _controllerEmail.clear();
                             _controllerPassword.clear();
@@ -149,7 +149,7 @@ class _LoginPageState extends State<LoginPage> {
                       Provider.of<GoogleSignInProvider>(context, listen: false);
                   var providerLoogin = provider.googleLoogin();
                   if (providerLoogin != null) {
-                    Navigator.pushNamed(context, '/');
+                    Navigator.pushReplacementNamed(context, '/');
                   }
                 },
               ),
