@@ -1,16 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/user_data.dart';
-import 'package:flutter_app/pages/home/search_car/search_car.dart';
-import 'package:flutter_app/pages/profile/profile_page.dart';
 import 'package:flutter_app/routes/pages.dart';
-import 'package:flutter_app/services/firebase_services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-
-import '../../drawer/drawer_menu.dart';
-import '../../fonts/fonts.dart';
-import '../../models/car.dart';
+import '../../../data/models/car.dart';
+import '../../../data/models/user_data.dart';
+import '../../../data/services/firebase_services.dart';
+import '../../../utils/drawer/drawer_menu.dart';
+import '../../../utils/fonts/fonts.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -21,19 +18,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var isLoaded = false;
-  bool _isClicked = false;
   User? currentUser = FirebaseAuth.instance.currentUser;
   UserData? user;
+  bool isFavoriteSelected = false;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int currentIndex = 0;
   Car? car;
 
-
-  void _handleClick() {
-    setState(() {
-      _isClicked = !_isClicked;
-    });
-  }
 
   void toast(String message) {
     Fluttertoast.showToast(
@@ -65,11 +56,11 @@ class _HomePageState extends State<HomePage> {
             });
           print(index);
           if(currentIndex == 1){
-            Navigator.pushReplacementNamed(context, '/favorites');
+            Navigator.pushNamed(context, '/favorites');
           }if(currentIndex == 2){
-            Navigator.pushReplacementNamed(context, '/search');
+            Navigator.pushNamed(context, '/search');
           }if(currentIndex == 3){
-            Navigator.pushReplacementNamed(context, '/profile');
+            Navigator.pushNamed(context, '/profile');
           }
         },
       ),
@@ -122,9 +113,9 @@ class _HomePageState extends State<HomePage> {
                       )),
                 ),
                 Container(
-                    height: 600,
+                    height: 490,
                     child: FutureBuilder(
-                      future: getAllCars(),
+                      future: getAllCarsWithFavorite(),
                       builder: ((context, snapshot) {
                         if (snapshot.hasData) {
                           List<Car>? cars = snapshot.data;
@@ -185,14 +176,12 @@ class _HomePageState extends State<HomePage> {
                                               GestureDetector(
                                                 child: Icon(
                                                   Icons.favorite,
-                                                  color: _isClicked
+                                                  color: cars[index].favorite == true
                                                       ? Colors.red
                                                       : Colors.grey,
                                                 ),
                                                 onTap: () {
-                                                  _handleClick();
-                                                  favoriteCar(cars[index].id,
-                                                      currentUser?.email);
+                                                  favoriteCar(cars[index].id, currentUser?.email);
                                                 },
                                               )
                                             ],

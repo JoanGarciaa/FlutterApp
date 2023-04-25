@@ -4,9 +4,9 @@ import 'package:flutter_app/main.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import '../../global_widgets/custom_rounded_button.dart';
-import '../../provider/google_sign_in.dart';
-import '../../services/auth.dart';
+import '../../../data/provider/google_sign_in.dart';
+import '../../../data/services/auth.dart';
+import '../../../utils/global_widgets/custom_rounded_button.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);

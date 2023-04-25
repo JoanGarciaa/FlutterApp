@@ -1,13 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app/pages/favorites/favorites_page.dart';
-import 'package:flutter_app/pages/home/home_page.dart';
-import 'package:flutter_app/pages/home/search_car/search_car.dart';
-import 'package:flutter_app/pages/profile/profile_page.dart';
-import 'package:flutter_app/services/firebase_services.dart';
 
-import '../main.dart';
+import '../../data/services/firebase_services.dart';
+import '../../main.dart';
+import '../../ui/pages/favorites/favorites_page.dart';
+import '../../ui/pages/finga/finga_melo.dart';
+import '../../ui/pages/home/home_page.dart';
+import '../../ui/pages/home/search_car/search_car.dart';
+import '../../ui/pages/profile/profile_page.dart';
 
 void main() => runApp(const MyApp());
 
@@ -43,7 +44,7 @@ class HomeDrawer extends StatelessWidget {
         children: [
           ListTile(
             title: const Text("Home"),
-            leading: Icon(Icons.home, color: Colors.terciaryColor,),
+            leading: const Icon(Icons.home, color: Colors.terciaryColor,),
             onTap: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const HomePage()));
@@ -51,7 +52,7 @@ class HomeDrawer extends StatelessWidget {
           ),
           ListTile(
             title: const Text('Mis Favoritos'),
-            leading: Icon(Icons.favorite,color: Colors.red,),
+            leading: const Icon(Icons.favorite,color: Colors.red,),
             onTap: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const FavoritesPage()));
@@ -59,7 +60,7 @@ class HomeDrawer extends StatelessWidget {
           ),
           ListTile(
             title: const Text('Buscar coches'),
-            leading: Icon(Icons.car_crash,color: Colors.terciaryColor,),
+            leading: const Icon(Icons.car_crash,color: Colors.terciaryColor,),
             onTap: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const SearchCarPage()));
@@ -67,33 +68,32 @@ class HomeDrawer extends StatelessWidget {
           ),
           ListTile(
             title: const Text('Perfil'),
-            leading: Icon(Icons.person,color: Colors.terciaryColor,),
+            leading: const Icon(Icons.person,color: Colors.terciaryColor,),
             onTap: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const ProfilePage()));
             },
           ),
           ListTile(
-            leading: Icon(Icons.exit_to_app,color: Colors.terciaryColor,),
+            leading: const Icon(Icons.exit_to_app,color: Colors.terciaryColor,),
             title: const Text('Cerrar App'),
             onTap: () {
               exit(0);
             },
           ),
           ListTile(
-            leading: Icon(Icons.exit_to_app,color: Colors.terciaryColor,),
+            leading: const Icon(Icons.exit_to_app,color: Colors.terciaryColor,),
             title: const Text('crear coche'),
             onTap: () {
               addCar();
             },
           ),
           ListTile(
-            leading: Icon(Icons.exit_to_app,color: Colors.terciaryColor,),
-            title: const Text('el teu cap'),
-            onTap: ()async {
-
-              await getMyFavoriteCars();
-
+            leading: const Icon(Icons.exit_to_app,color: Colors.terciaryColor,),
+            title: const Text('finga meló'),
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const FingaMeloPage()));
             },
           ),
         ],

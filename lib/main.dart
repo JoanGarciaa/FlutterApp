@@ -1,17 +1,20 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/pages/auth/register_page.dart';
-import 'package:flutter_app/pages/favorites/favorites_page.dart';
-import 'package:flutter_app/pages/home/home_page.dart';
-import 'package:flutter_app/pages/auth/login_page.dart';
-import 'package:flutter_app/pages/home/info_cars/info_car.dart';
-import 'package:flutter_app/pages/home/search_car/search_car.dart';
-import 'package:flutter_app/pages/profile/profile_page.dart';
-import 'package:flutter_app/provider/google_sign_in.dart';
+import 'package:flutter_app/data/models/car.dart';
+import 'package:flutter_app/ui/pages/auth/login_page.dart';
+import 'package:flutter_app/ui/pages/auth/register_page.dart';
+import 'package:flutter_app/ui/pages/favorites/favorites_page.dart';
+import 'package:flutter_app/ui/pages/home/compare_cars/compare_car.dart';
+import 'package:flutter_app/ui/pages/home/compare_cars/selected_car/selected_car.dart';
+import 'package:flutter_app/ui/pages/home/home_page.dart';
+import 'package:flutter_app/ui/pages/home/info_cars/info_car.dart';
+import 'package:flutter_app/ui/pages/home/search_car/search_car.dart';
+import 'package:flutter_app/ui/pages/profile/profile_page.dart';
+import 'package:flutter_app/utils/fonts/fonts.dart';
 import 'package:provider/provider.dart';
 
+import 'data/provider/google_sign_in.dart';
 import 'firebase_options.dart';
-import 'fonts/fonts.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,6 +50,9 @@ class MyApp extends StatelessWidget {
           '/profile': (context) => ProfilePage(),
           '/favorites': (context) => FavoritesPage(),
           '/search': (context) => SearchCarPage(),
+          '/compare_car': (context) => CompareCarsPage(),
+          '/selected_car': (context) => SelectedCarPage(),
+
         },
       ));
 }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/user_data.dart';
-import 'package:flutter_app/services/firebase_services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import '../../../drawer/drawer_menu.dart';
-import '../../../fonts/fonts.dart';
-import '../../../models/car.dart';
+import '../../../../data/models/car.dart';
+import '../../../../data/models/user_data.dart';
+import '../../../../data/services/firebase_services.dart';
+import '../../../../utils/drawer/drawer_menu.dart';
+
 
 class SearchCarPage extends StatefulWidget {
   const SearchCarPage({Key? key}) : super(key: key);
@@ -20,7 +20,6 @@ class _SearchCarPageState extends State<SearchCarPage> {
   int currentIndex = 2;
   String? itemSelected = "";
   List<Car>? cars =[];
-  final TextEditingController _controllerBrand = TextEditingController();
 
   static const List<String> list = <String>[
     'Ver todos',
@@ -150,12 +149,11 @@ class _SearchCarPageState extends State<SearchCarPage> {
                     itemSelected = item;
                   });
                   cars?.clear();
-                  print(itemSelected);
                 },
               ),
             ),
             Container(
-                height: 600,
+                height: 490,
                 child: FutureBuilder(
                   future: getAllCarsForSearch(itemSelected),
                   builder: ((context, snapshot) {
@@ -171,18 +169,9 @@ class _SearchCarPageState extends State<SearchCarPage> {
                             key: Key(cars![index].id),
                             child: GestureDetector(
                               onTap: () async {
-                                // getCar(snapshot.data?[index]['uid']);
-                                print("HOOL");
-                                await Navigator.pushReplacementNamed(context, '/info-car',
+                                await Navigator.pushNamed(context, '/info-car',
                                     arguments: {
-                                      "brand": cars![index].brand,
-                                      "model": cars![index].model,
-                                      "image": cars![index].image,
-                                      "max_speed": cars![index].max_speed,
-                                      "fuel": cars![index].fuel,
-                                      "cv": cars![index].cv,
-                                      "engine": cars![index].engine,
-                                      "id": cars![index].id,
+                                      "car": cars![index],
                                     });
                                 setState(() {});
                               },

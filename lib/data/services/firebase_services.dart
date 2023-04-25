@@ -1,50 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_app/models/car.dart';
 
+import '../models/car.dart';
 import '../models/user_data.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
 User? currentUser = FirebaseAuth.instance.currentUser;
 
-Future<List> getUsers() async {
-  List user = [];
-  CollectionReference collectionReferenceUser = db.collection('users');
-  QuerySnapshot queryUser = await collectionReferenceUser.get();
-  queryUser.docs.forEach((element) {
-    final Map<String, dynamic> data = element.data() as Map<String, dynamic>;
-    final person = {"username": data['username'], "uid": element.id};
 
-    user.add(person);
-  });
-  return user;
-}
 
-Future<UserData?> getUser() async {
-  UserData? user;
-  User? currentUser = FirebaseAuth.instance.currentUser;
-  CollectionReference collectionReferenceUser = db.collection('users');
-  QuerySnapshot queryUser = await collectionReferenceUser
-      .where('id', isEqualTo: currentUser?.uid)
-      .get();
-  queryUser.docs.forEach((element) {
-    final Map<String, dynamic> data =
-        queryUser.docs[0].data() as Map<String, dynamic>;
-    print(data['years']);
-    user = UserData(
-        email: data['email'],
-        password: data['password'],
-        sex: data['sex'],
-        username: data['username'],
-        years: data['years'],
-        favorite_cars: [],
-        image: data['image']);
-    print("HOOOOOOOOOOOOOOOOOOOOOOOL $user");
-  });
-
-  return user;
-}
 
 Future<List<Car>> getAllCars() async {
   List<Car> cars = [];
@@ -63,6 +28,38 @@ Future<List<Car>> getAllCars() async {
       fuel: data['fuel'],
       engine: data['engine'],
       favorite: data['favorite'],
+      price: data['price']
+    );
+    cars.add(car);
+  });
+  return cars;
+}
+
+Future<List<Car>> getAllCarsWithFavorite() async {
+  List<Car> cars = [];
+  List<Car> favoriteCarsList = await getMyFavoriteCars();
+  CollectionReference collectionReferenceUser = db.collection('cars');
+  QuerySnapshot queryUser = await collectionReferenceUser.get();
+  queryUser.docs.forEach((element) {
+    bool isCarFavorite = false;
+    final Map<String, dynamic> data = element.data() as Map<String, dynamic>;
+    for(Car car in favoriteCarsList){
+      if(car.id == data['id']){
+        isCarFavorite = true;
+      }
+    }
+    Car car = Car(
+      id: element.id,
+      brand: data['brand'],
+      model: data['model'],
+      image: data['image'],
+      image2: data['image2'],
+      max_speed: data['max_speed'],
+      cv: data['cv'],
+      fuel: data['fuel'],
+      engine: data['engine'],
+      favorite: isCarFavorite,
+      price: data['price'],
     );
     cars.add(car);
   });
@@ -72,7 +69,7 @@ Future<List<Car>> getAllCars() async {
 Future<List<Car>> getAllCarsForSearch(String? brand) async {
   List<Car> cars = [];
   CollectionReference collectionReferenceUser = db.collection('cars');
-  if(brand == "Ver todos"){
+  if(brand == "Ver todos" || brand == ""){
     QuerySnapshot queryUser = await collectionReferenceUser.get();
     queryUser.docs.forEach((element) {
       final Map<String, dynamic> data = element.data() as Map<String, dynamic>;
@@ -84,6 +81,7 @@ Future<List<Car>> getAllCarsForSearch(String? brand) async {
         image2: data['image2'],
         max_speed: data['max_speed'],
         cv: data['cv'],
+        price: data['price'],
         fuel: data['fuel'],
         engine: data['engine'],
         favorite: data['favorite'],
@@ -102,6 +100,7 @@ Future<List<Car>> getAllCarsForSearch(String? brand) async {
         image2: data['image2'],
         max_speed: data['max_speed'],
         cv: data['cv'],
+        price: data['price'],
         fuel: data['fuel'],
         engine: data['engine'],
         favorite: data['favorite'],
@@ -113,10 +112,24 @@ Future<List<Car>> getAllCarsForSearch(String? brand) async {
   return cars;
 }
 
-getCar(String id) async {
+Future<Car?>getCar(String? id) async {
+  Car? car;
   final snapshot =
       await FirebaseFirestore.instance.collection('cars').doc(id).get();
-  final car = snapshot.data();
+  final data = snapshot.data();
+  car = Car(
+    id: data!['id'],
+    brand: data!['brand'],
+    model: data['model'],
+    image: data['image'],
+    image2: data['image2'],
+    max_speed: data['max_speed'],
+    cv: data['cv'],
+    price: data['price'],
+    fuel: data['fuel'],
+    engine: data['engine'],
+    favorite: data['favorite'],
+  );
   return car;
 }
 
@@ -147,18 +160,11 @@ Future<void> favoriteCar(String idCar, String? idUser) async {
   await db.collection('users').doc(idUser).update({'favorite_cars': carList});
 }
 
-Future<void> removeFavoriteCar(String idCar, String? idUser) async {
-  getUser();
-  List carList = [];
-  carList.remove(idCar);
-  await db.collection('users').doc(idUser).update({'favorite_cars': carList});
-}
 
 Future<List<Car>>getMyFavoriteCars()async{
   List<Car> favoriteCars = [];
   QuerySnapshot? queryCar;
   List<QuerySnapshot?> queryCarList = [];
-
   User? currentUser = FirebaseAuth.instance.currentUser;
   CollectionReference collectionReferenceUser = db.collection('users');
   QuerySnapshot queryUser = await collectionReferenceUser
@@ -185,33 +191,66 @@ Future<List<Car>>getMyFavoriteCars()async{
         image2: data['image2'],
         max_speed: data['max_speed'],
         cv: data['cv'],
+        price: data['price'],
         fuel: data['fuel'],
         engine: data['engine'],
         favorite: data['favorite'],
       );
       favoriteCars.add(car);
-      print(favoriteCars.length);
-
+      int totalPrices = favoriteCars.fold(0, (previousValue, car) => previousValue + car.price);
+      print(totalPrices);
     });
   });
 
   return favoriteCars;
 }
 
-Future<void> createUserDB(UserData user_data) async {
-  await db.collection('users').doc(user_data.email).set({
-    'email': user_data.email,
-    'password': user_data.password,
-    'username': user_data.username,
-    'years': user_data.years,
-    'sex': user_data.sex,
-    'favorite_cars': user_data.favorite_cars
+Future<int>getTotalValueGarage()async{
+  List<Car> favoriteCars = [];
+  QuerySnapshot? queryCar;
+  List<QuerySnapshot?> queryCarList = [];
+  int totalPrices = 0;
+  User? currentUser = FirebaseAuth.instance.currentUser;
+  CollectionReference collectionReferenceUser = db.collection('users');
+  QuerySnapshot queryUser = await collectionReferenceUser
+      .where('email', isEqualTo: currentUser?.email)
+      .get();
+
+  for(String id in queryUser.docs[0].get('favorite_cars')){
+    CollectionReference collectionReferenceCar = db.collection('cars');
+    queryCar = await collectionReferenceCar
+        .where('id', isEqualTo: id)
+        .get();
+    queryCarList.add(queryCar);
+  }
+
+  queryCarList.forEach((element) {
+    element?.docs.forEach((element) {
+
+      final Map<String, dynamic> data = element.data() as Map<String, dynamic>;
+      Car car = Car(
+        id: element.id,
+        brand: data['brand'],
+        model: data['model'],
+        image: data['image'],
+        image2: data['image2'],
+        max_speed: data['max_speed'],
+        cv: data['cv'],
+        price: data['price'],
+        fuel: data['fuel'],
+        engine: data['engine'],
+        favorite: data['favorite'],
+      );
+      favoriteCars.add(car);
+      totalPrices = favoriteCars.fold(0, (previousValue, car) => previousValue + car.price);
+      print(totalPrices);
+    });
   });
+
+  return totalPrices;
 }
 
-Future<void> addUser(String name) async {
-  await db.collection('users').add({'name': name});
-}
+
 
 Future<void> addCar() async {
   String id = "1012";
@@ -223,7 +262,10 @@ Future<void> addCar() async {
   String engine = "RB26DETT";
   String image =
       "https://www.autonocion.com/wp-content/uploads/2020/05/Nissan-GT-R-R34-28.jpg";
+  String image2 =
+      "https://www.autonocion.com/wp-content/uploads/2020/05/Nissan-GT-R-R34-28.jpg";
   String fuel = "Gasoline";
+  int price = 1;
   await db.collection('cars').doc(id).set({
     'id': id,
     'brand': brand,
@@ -233,14 +275,10 @@ Future<void> addCar() async {
     'favorite': favorite,
     'engine': engine,
     'fuel': fuel,
-    'image': image
+    'image': image,
+    'image2': image2,
+    'price' : price
   });
 }
 
-Future<void> modifyUser(String uid, String newName) async {
-  await db.collection('users').doc(uid).update({'name': newName});
-}
 
-Future<void> deleteUser(String uid) async {
-  await db.collection('users').doc(uid).delete();
-}

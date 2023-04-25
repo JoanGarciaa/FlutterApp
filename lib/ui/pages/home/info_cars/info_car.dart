@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
-import '../../../models/car.dart';
+import '../../../../data/models/car.dart';
 
 class InfoCarPage extends StatefulWidget {
   const InfoCarPage({Key? key}) : super(key: key);
@@ -14,10 +15,7 @@ class InfoCarPage extends StatefulWidget {
 class _InfoCarPageState extends State<InfoCarPage> {
   TextEditingController nameController = TextEditingController(text: "");
   Car? car;
-  double value = 0.0;
   int index = 0;
-
-
   @override
   Widget build(BuildContext context) {
     final Map arguments = ModalRoute
@@ -25,8 +23,8 @@ class _InfoCarPageState extends State<InfoCarPage> {
         .settings
         .arguments as Map;
     car = arguments['car'];
-    value = car!.max_speed / 300;
     return Scaffold(
+      backgroundColor: Colors.mainColor,
       appBar: AppBar(
         title: const Text(
           "AutoSpecs",
@@ -44,7 +42,7 @@ class _InfoCarPageState extends State<InfoCarPage> {
               index: index,
               children: [
                 Container(
-                  height: 400,
+                  height: 300,
                   alignment: Alignment.centerRight,
                   decoration: BoxDecoration(
                     color: Colors.grey[900],
@@ -64,7 +62,7 @@ class _InfoCarPageState extends State<InfoCarPage> {
                       size: 40,),),
                 ),
                 Container(
-                  height: 400,
+                  height: 300,
                   alignment: Alignment.centerRight,
                   decoration: BoxDecoration(
                     color: Colors.grey[900],
@@ -101,13 +99,13 @@ class _InfoCarPageState extends State<InfoCarPage> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const Expanded(
+                      Expanded(
                         child: Align(
                           alignment: Alignment.centerRight,
                           child: Text(
-                            '83,455€',
-                            style: TextStyle(
-                              color: Colors.terciaryColor,
+                            "${car!.price}.000 €",
+                            style: const TextStyle(
+                              color: Colors.mainColor,
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                             ),
@@ -158,31 +156,53 @@ class _InfoCarPageState extends State<InfoCarPage> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  const Text(
-                    'Velocidad máxima:',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
-                  ),
-                  const SizedBox(height: 10,),
-                  Container(
-                    width: 100,
-                    height: 100,
-                    child: CircularPercentIndicator(
-                      center: Text(
-                        '${car!.max_speed} \n km/h',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white),
+                  Row(
+                    children: [
+                      const Text(
+                        'Velocidad máxima:',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
                       ),
-                      radius: 40.0,
-                      lineWidth: 13.0,
-                      animation: true,
-                      percent: value,
-                      circularStrokeCap: CircularStrokeCap.round,
-                      progressColor: Colors.purple,
+                      Container(
+                        width: 200,
+                        child: LinearPercentIndicator(
+                          center: Text(
+                            '${car!.max_speed} KM/H',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.secondaryColor),
+                          ),
+                          trailing: Icon(Icons.local_fire_department_outlined, color: Colors.deepPurple,),
+                          linearStrokeCap: LinearStrokeCap.roundAll,
+                          lineHeight: 14.0,
+                          animation: true,
+                          percent: car!.max_speed / 350,
+                          animationDuration: 1000,
+                          progressColor: Colors.deepPurple,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20,),
+                  SizedBox(height: 40,
+                    child: ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                          primary: const Color.fromRGBO(233, 233, 233, 1),
+                          onPrimary: Colors.secondaryColor,
+                          minimumSize: const Size(double.infinity, 50)),
+                      icon: const FaIcon(FontAwesomeIcons.car),
+                      label: const Text("Comparar coches",),
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/compare_car',
+                        arguments: {
+                          "car": car,
+                        });
+                        setState(() {});
+                      },
                     ),
                   ),
+
                 ],
               ),
             ),

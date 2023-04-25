@@ -1,14 +1,13 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_app/fonts/fonts.dart';
-import 'package:flutter_app/global_widgets/custom_rounded_button.dart';
-import 'package:flutter_app/services/firebase_services.dart';
-import 'package:flutter_awesome_buttons/flutter_awesome_buttons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:flutter_app/models/user_data.dart';
-
-import '../../services/auth.dart';
+import '../../../data/models/user_data.dart';
+import '../../../data/provider/user_repository.dart';
+import '../../../data/services/auth.dart';
+import '../../../data/services/firebase_services.dart';
+import '../../../utils/fonts/fonts.dart';
+import '../../../utils/global_widgets/custom_rounded_button.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -27,9 +26,9 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _controllerYears = TextEditingController();
 
   String? _selectedGender = 'Hombre';
-  List<String> _genders = ['Hombre', 'Mujer', 'Otro'];
+  final List<String> _genders = ['Hombre', 'Mujer', 'Otro'];
 
-  late UserData user_data;
+  late UserData userData;
 
   void toast(String message) {
     Fluttertoast.showToast(
@@ -64,10 +63,10 @@ class _RegisterPageState extends State<RegisterPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
+            const SizedBox(
               height: 100,
               width: 200,
-              child: const Center(
+              child: Center(
                   child: Text(
                 'REGISTRO',
                 textAlign: TextAlign.center,
@@ -122,7 +121,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ],
               ),
             ),
-            Container(
+            SizedBox(
               width: 350,
               child: Row(
                 children: [
@@ -176,52 +175,52 @@ class _RegisterPageState extends State<RegisterPage> {
             const SizedBox(
               height: 40,
             ),
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  CustomRoundedButtonWithIcon(
-                    buttonColor: Colors.mainColor,
-                    radius: 13,
-                    splashColor: Colors.terciaryColor,
-                    onPressed: () async {
-                      try{
-                        await Auth()
-                            .createUserWithEmailAndPassword(
-                            _controllerEmail.text, _controllerPassword.text)
-                            .then((_) {
-                          Auth().sendEmailVerification();
-                          user_data = UserData(email:_controllerEmail.text,password:_controllerPassword.text,sex:_selectedGender!,username:_controllerUsername.text,years:int.parse(_controllerYears.text),favorite_cars:[], image: "https://cdn.autobild.es/sites/navi.axelspringer.es/public/media/image/2018/01/mazda-rx-7_4.jpg");
-                          createUserDB(user_data);
-                          toast("Registro con éxito");
-                          Navigator.pushReplacementNamed(context, '/login');
-                        });
-                      }catch(error){
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                CustomRoundedButtonWithIcon(
+                  buttonColor: Colors.mainColor,
+                  radius: 13,
+                  splashColor: Colors.terciaryColor,
+                  onPressed: () async {
+                    try{
+                      await Auth()
+                          .createUserWithEmailAndPassword(
+                          _controllerEmail.text, _controllerPassword.text)
+                          .then((_) {
+                        Auth().sendEmailVerification();
+                        userData = UserData(email:_controllerEmail.text,password:_controllerPassword.text,sex:_selectedGender!,username:_controllerUsername.text,years:int.parse(_controllerYears.text),favorite_cars:[], image: "https://cdn.autobild.es/sites/navi.axelspringer.es/public/media/image/2018/01/mazda-rx-7_4.jpg");
+                        createUserDB(userData);
+                        toast("Registro con éxito");
+                        Navigator.pushReplacementNamed(context, '/login');
+                      });
+                    }catch(error){
+                      if (kDebugMode) {
                         print(error);
-                        toast("No se ha podido crear el usuario");
                       }
-                    },
-                    title: 'Registro',
-                    icon: Icons.app_registration,
-                    size: 140,
-                  ),
-                  const SizedBox(
-                    width: 30,
-                    height: 10,
-                  ),
-                  CustomRoundedButtonWithIcon(
-                    buttonColor: Colors.mainColor,
-                    onPressed: () async {
-                      Navigator.pushReplacementNamed(context, '/login');
-                    },
-                    splashColor: Colors.terciaryColor,
-                    title: 'Login',
-                    icon: Icons.login,
-                    radius: 13,
-                    size: 140,
-                  ),
-                ],
-              ),
+                      toast("No se ha podido crear el usuario");
+                    }
+                  },
+                  title: 'Registro',
+                  icon: Icons.app_registration,
+                  size: 140,
+                ),
+                const SizedBox(
+                  width: 30,
+                  height: 10,
+                ),
+                CustomRoundedButtonWithIcon(
+                  buttonColor: Colors.mainColor,
+                  onPressed: () async {
+                    Navigator.pushReplacementNamed(context, '/login');
+                  },
+                  splashColor: Colors.terciaryColor,
+                  title: 'Login',
+                  icon: Icons.login,
+                  radius: 13,
+                  size: 140,
+                ),
+              ],
             ),
           ],
         ),

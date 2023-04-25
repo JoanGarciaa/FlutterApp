@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/drawer/drawer_menu.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
-import '../../fonts/fonts.dart';
-import '../../models/car.dart';
-import '../../services/firebase_services.dart';
+import '../../../data/models/car.dart';
+import '../../../data/services/firebase_services.dart';
+import '../../../utils/drawer/drawer_menu.dart';
+import '../../../utils/fonts/fonts.dart';
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({Key? key}) : super(key: key);
@@ -17,6 +17,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int currentIndex = 1;
   bool _isClicked = false;
+  String formattedPrice = "";
 
   void _handleClick() {
     setState(() {
@@ -27,26 +28,37 @@ class _FavoritesPageState extends State<FavoritesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       bottomNavigationBar: GNav(
         gap: 8,
         tabBackgroundColor: Colors.mainColor,
         tabs: const [
-          GButton(icon: Icons.home,text: 'Home',),
-          GButton(icon: Icons.favorite,text: 'Favoritos'),
-          GButton(icon: Icons.search,text: 'Buscar', ),
-          GButton(icon: Icons.person,text: 'Perfil',),
+          GButton(
+            icon: Icons.home,
+            text: 'Home',
+          ),
+          GButton(icon: Icons.favorite, text: 'Favoritos'),
+          GButton(
+            icon: Icons.search,
+            text: 'Buscar',
+          ),
+          GButton(
+            icon: Icons.person,
+            text: 'Perfil',
+          ),
         ],
         selectedIndex: currentIndex,
-        onTabChange: (index){
+        onTabChange: (index) {
           setState(() {
             currentIndex = index;
           });
-          print(index);
-          if(currentIndex == 0){
+          if (currentIndex == 0) {
             Navigator.pushReplacementNamed(context, '/');
-          }if(currentIndex == 2){
+          }
+          if (currentIndex == 2) {
             Navigator.pushReplacementNamed(context, '/search');
-          }if(currentIndex == 3){
+          }
+          if (currentIndex == 3) {
             Navigator.pushReplacementNamed(context, '/profile');
           }
         },
@@ -70,7 +82,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
         ),
         actions: [
           Padding(
-            padding: EdgeInsets.only(right: 8.0),
+            padding: const EdgeInsets.only(right: 8.0),
             child: GestureDetector(
               onTap: () {
                 Navigator.pushReplacementNamed(context, '/profile');
@@ -87,20 +99,35 @@ class _FavoritesPageState extends State<FavoritesPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              height: 100,
-              child: const Center(
-                  child: Text(
-                    'TUS FAVORITOS',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 30,
-                        letterSpacing: 2,
-                        fontFamily: AppFonts.roboto),
-                  )),
-            ),
-            Container(
-                height: 600,
+            SizedBox(
+                height: 100,
+                child: FutureBuilder(
+                  future: getTotalValueGarage(),
+                  builder: ((context, snapshot) {
+                    if (snapshot.hasData) {
+                      int? value = snapshot.data;
+                      formattedPrice = value.toString().replaceAllMapped(
+                          RegExp(r'(\d{1,3})(\d{3})$'),
+                          (Match m) => '${m[1]}.${m[2]}');
+                      return Center(
+                          child: Text(
+                        '$formattedPrice.000€',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            fontSize: 30,
+                            letterSpacing: 2,
+                            fontFamily: AppFonts.roboto),
+                      ));
+                    } else {
+                      return const LinearProgressIndicator(
+                        color: Colors.secondaryColor,
+                        backgroundColor: Colors.grey,
+                      );
+                    }
+                  }),
+                )),
+            SizedBox(
+                height: 490,
                 child: FutureBuilder(
                   future: getMyFavoriteCars(),
                   builder: ((context, snapshot) {
@@ -187,7 +214,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                       return const Center(child: CircularProgressIndicator());
                     }
                   }),
-                ))
+                )),
           ],
         ),
       ),

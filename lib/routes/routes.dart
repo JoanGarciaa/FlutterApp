@@ -13,6 +13,11 @@ abstract class Routes{
   static const PROFILE = "/profile";
   // ignore: constant_identifier_names
   static const INFOCAR = "/info_car";
+  // ignore: constant_identifier_names
+  static const COMPARE = "/compare_car";
+  // ignore: constant_identifier_names
+  static const SELECTED = "/selected_car";
+
 
 
 }
