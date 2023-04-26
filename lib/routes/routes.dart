@@ -17,6 +17,8 @@ abstract class Routes{
   static const COMPARE = "/compare_car";
   // ignore: constant_identifier_names
   static const SELECTED = "/selected_car";
+  // ignore: constant_identifier_names
+  static const RACE = "/race";
 
 
 

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/ui/pages/home/compare_cars/simulate_race/simulate_race.dart';
+import 'package:flutter_app/utils/global_widgets/custom_rounded_button.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../data/models/car.dart';
@@ -20,7 +23,15 @@ class _CompareCarsPageState extends State<CompareCarsPage> {
     super.initState();
     _fetchCars();
   }
-
+  void toast(String message) {
+    Fluttertoast.showToast(
+        msg: message,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.grey,
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
   Future<void> _fetchCars() async {
     // Obtener información del primer coche
     const car1Id = '1001';
@@ -196,6 +207,24 @@ class _CompareCarsPageState extends State<CompareCarsPage> {
                       car2 != null ? '${car2!.cv} Nm' : "X",
                       Colors.deepPurple[900]!,
                     ),
+                    const SizedBox(height: 30,),
+                    SizedBox(
+                      height: 50,
+                      width: 200,
+                      child: CustomRoundedButtonWithIcon(onPressed: () async {
+                        car2 != null ? await Navigator.pushNamed(context, '/race',
+                            arguments: {
+                              "car": car1,
+                              "car2": car2
+                            }) : toast("Necesitas que hayan dos coches");
+                        
+                        
+                      }, title: 'Simular Carrera',
+                      icon: Icons.flag,
+                      size: 20,
+                      ),
+                    ),
+                    const SizedBox(height: 50,)
                   ],
                 ),
               ),

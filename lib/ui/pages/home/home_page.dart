@@ -113,7 +113,7 @@ class _HomePageState extends State<HomePage> {
                       )),
                 ),
                 Container(
-                    height: 490,
+                    height: 491,
                     child: FutureBuilder(
                       future: getAllCarsWithFavorite(),
                       builder: ((context, snapshot) {
@@ -194,7 +194,10 @@ class _HomePageState extends State<HomePage> {
                               );
                             },
                           );
-                        } else {
+                        }else if(snapshot.hasError){
+                          return Text("Error: ${snapshot.error}");
+                        }
+                        else {
                           return const Center(child: CircularProgressIndicator());
                         }
                       }),

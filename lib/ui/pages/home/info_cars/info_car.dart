@@ -18,10 +18,7 @@ class _InfoCarPageState extends State<InfoCarPage> {
   int index = 0;
   @override
   Widget build(BuildContext context) {
-    final Map arguments = ModalRoute
-        .of(context)!
-        .settings
-        .arguments as Map;
+    final Map arguments = ModalRoute.of(context)!.settings.arguments as Map;
     car = arguments['car'];
     return Scaffold(
       backgroundColor: Colors.mainColor,

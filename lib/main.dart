@@ -6,6 +6,7 @@ import 'package:flutter_app/ui/pages/auth/register_page.dart';
 import 'package:flutter_app/ui/pages/favorites/favorites_page.dart';
 import 'package:flutter_app/ui/pages/home/compare_cars/compare_car.dart';
 import 'package:flutter_app/ui/pages/home/compare_cars/selected_car/selected_car.dart';
+import 'package:flutter_app/ui/pages/home/compare_cars/simulate_race/simulate_race.dart';
 import 'package:flutter_app/ui/pages/home/home_page.dart';
 import 'package:flutter_app/ui/pages/home/info_cars/info_car.dart';
 import 'package:flutter_app/ui/pages/home/search_car/search_car.dart';
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
           '/search': (context) => SearchCarPage(),
           '/compare_car': (context) => CompareCarsPage(),
           '/selected_car': (context) => SelectedCarPage(),
-
+          '/race': (context) => SimulateRaceCar(),
         },
       ));
 }
