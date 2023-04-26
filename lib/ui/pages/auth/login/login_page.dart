@@ -4,9 +4,10 @@ import 'package:flutter_app/main.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import '../../../data/provider/google_sign_in.dart';
-import '../../../data/services/auth.dart';
-import '../../../utils/global_widgets/custom_rounded_button.dart';
+import '../../../../data/provider/google_sign_in.dart';
+import '../../../../data/services/auth.dart';
+import '../../../../utils/global_widgets/custom_rounded_button.dart';
+import 'login_controller.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -18,19 +19,10 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   String? errorMessage = '';
   bool isLogin = true;
+  final _controller = LoginController();
 
   final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
-
-  void toast(String message) {
-    Fluttertoast.showToast(
-        msg: message,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.grey,
-        textColor: Colors.white,
-        fontSize: 16.0);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,23 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   CustomRoundedButtonWithIcon(
                     onPressed: () async {
-                      try {
-                        await Auth()
-                            .signInWithEmailAndPassword(
-                                _controllerEmail.text, _controllerPassword.text)
-                            .then((_) {
-                          if (Auth().currentUser?.emailVerified == true) {
-                            Navigator.pushReplacementNamed(context, '/');
-                            toast("Bienvenido ${_controllerEmail.text}");
-                            _controllerEmail.clear();
-                            _controllerPassword.clear();
-                          } else {
-                            toast('Verifica tu correo');
-                          }
-                        });
-                      } catch (AuthException) {
-                        toast('El usuario no existe');
-                      }
+                      _controller.loginUser(_controllerEmail.text, _controllerPassword.text, context);
                     },
                     title: 'ENTRAR',
                     icon: Icons.login,
@@ -145,12 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                 icon: const FaIcon(FontAwesomeIcons.google),
                 label: const Text("Signup with google"),
                 onPressed: () {
-                  final provider =
-                      Provider.of<GoogleSignInProvider>(context, listen: false);
-                  var providerLoogin = provider.googleLoogin();
-                  if (providerLoogin != null) {
-                    Navigator.pushReplacementNamed(context, '/');
-                  }
+                  _controller.googleLogin(context);
                 },
               ),
             )

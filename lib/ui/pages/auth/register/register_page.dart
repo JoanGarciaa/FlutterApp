@@ -1,13 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_app/ui/pages/auth/register/register_controller.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import '../../../data/models/user_data.dart';
-import '../../../data/provider/user_repository.dart';
-import '../../../data/services/auth.dart';
-import '../../../data/services/firebase_services.dart';
-import '../../../utils/fonts/fonts.dart';
-import '../../../utils/global_widgets/custom_rounded_button.dart';
+import '../../../../data/models/user_data.dart';
+import '../../../../data/provider/user_repository.dart';
+import '../../../../data/services/auth.dart';
+import '../../../../data/services/firebase_services.dart';
+import '../../../../utils/fonts/fonts.dart';
+import '../../../../utils/global_widgets/custom_rounded_button.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -19,6 +20,7 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   String? errorMessage = '';
   bool isLogin = true;
+  final _controller = RegisterController();
 
   final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
@@ -183,23 +185,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   radius: 13,
                   splashColor: Colors.terciaryColor,
                   onPressed: () async {
-                    try{
-                      await Auth()
-                          .createUserWithEmailAndPassword(
-                          _controllerEmail.text, _controllerPassword.text)
-                          .then((_) {
-                        Auth().sendEmailVerification();
-                        userData = UserData(email:_controllerEmail.text,password:_controllerPassword.text,sex:_selectedGender!,username:_controllerUsername.text,years:int.parse(_controllerYears.text),favorite_cars:[], image: "https://cdn.autobild.es/sites/navi.axelspringer.es/public/media/image/2018/01/mazda-rx-7_4.jpg");
-                        createUserDB(userData);
-                        toast("Registro con éxito");
-                        Navigator.pushReplacementNamed(context, '/login');
-                      });
-                    }catch(error){
-                      if (kDebugMode) {
-                        print(error);
-                      }
-                      toast("No se ha podido crear el usuario");
-                    }
+                    _controller.createUser(_controllerEmail.text,_controllerPassword.text,_controllerUsername.text,_selectedGender!,int.parse(_controllerYears.text),context);
                   },
                   title: 'Registro',
                   icon: Icons.app_registration,

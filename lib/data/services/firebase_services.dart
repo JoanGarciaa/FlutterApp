@@ -9,7 +9,39 @@ FirebaseFirestore db = FirebaseFirestore.instance;
 User? currentUser = FirebaseAuth.instance.currentUser;
 
 
+class FirebaseRepository{
 
+  Future<List<Car>> getAllCarsWithFavorite() async {
+    List<Car> cars = [];
+    List<Car> favoriteCarsList = await getMyFavoriteCars();
+    CollectionReference collectionReferenceUser = db.collection('cars');
+    QuerySnapshot queryUser = await collectionReferenceUser.get();
+    queryUser.docs.forEach((element) {
+      bool isCarFavorite = false;
+      final Map<String, dynamic> data = element.data() as Map<String, dynamic>;
+      for(Car car in favoriteCarsList){
+        if(car.id == data['id']){
+          isCarFavorite = true;
+        }
+      }
+      Car car = Car(
+        id: element.id,
+        brand: data['brand'],
+        model: data['model'],
+        image: data['image'],
+        image2: data['image2'],
+        max_speed: data['max_speed'],
+        cv: data['cv'],
+        fuel: data['fuel'],
+        engine: data['engine'],
+        favorite: isCarFavorite,
+        price: data['price'],
+      );
+      cars.add(car);
+    });
+    return cars;
+  }
+}
 
 Future<List<Car>> getAllCars() async {
   List<Car> cars = [];
@@ -35,36 +67,7 @@ Future<List<Car>> getAllCars() async {
   return cars;
 }
 
-Future<List<Car>> getAllCarsWithFavorite() async {
-  List<Car> cars = [];
-  List<Car> favoriteCarsList = await getMyFavoriteCars();
-  CollectionReference collectionReferenceUser = db.collection('cars');
-  QuerySnapshot queryUser = await collectionReferenceUser.get();
-  queryUser.docs.forEach((element) {
-    bool isCarFavorite = false;
-    final Map<String, dynamic> data = element.data() as Map<String, dynamic>;
-    for(Car car in favoriteCarsList){
-      if(car.id == data['id']){
-        isCarFavorite = true;
-      }
-    }
-    Car car = Car(
-      id: element.id,
-      brand: data['brand'],
-      model: data['model'],
-      image: data['image'],
-      image2: data['image2'],
-      max_speed: data['max_speed'],
-      cv: data['cv'],
-      fuel: data['fuel'],
-      engine: data['engine'],
-      favorite: isCarFavorite,
-      price: data['price'],
-    );
-    cars.add(car);
-  });
-  return cars;
-}
+
 
 Future<List<Car>> getAllCarsForSearch(String? brand) async {
   List<Car> cars = [];

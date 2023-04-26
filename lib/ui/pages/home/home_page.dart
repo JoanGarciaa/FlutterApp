@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/routes/pages.dart';
+import 'package:flutter_app/ui/pages/home/home_controller.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import '../../../data/models/car.dart';
@@ -24,7 +25,7 @@ class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int currentIndex = 0;
   Car? car;
-
+  final _controller = HomeController();
 
   void toast(String message) {
     Fluttertoast.showToast(
@@ -115,7 +116,7 @@ class _HomePageState extends State<HomePage> {
                 Container(
                     height: 491,
                     child: FutureBuilder(
-                      future: getAllCarsWithFavorite(),
+                      future: _controller.getCarsHome(),
                       builder: ((context, snapshot) {
                         if (snapshot.hasData) {
                           List<Car>? cars = snapshot.data;

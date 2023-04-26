@@ -104,7 +104,7 @@ class _SearchCarPageState extends State<SearchCarPage> {
                       child: SizedBox(
                         height: 200.0,
                         child: ListView.builder(
-                          padding: EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(8.0),
                           itemCount: options.length,
                           itemBuilder: (BuildContext context, int index) {
                             final String option = options.elementAt(index);
@@ -152,7 +152,7 @@ class _SearchCarPageState extends State<SearchCarPage> {
                 },
               ),
             ),
-            Container(
+            SizedBox(
                 height: 490,
                 child: FutureBuilder(
                   future: getAllCarsForSearch(itemSelected),
