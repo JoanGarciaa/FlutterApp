@@ -27,7 +27,7 @@ class RegisterController{
           .createUserWithEmailAndPassword(email,password)
           .then((_) {
         Auth().sendEmailVerification();
-        userData = UserData(email: email,password: password,sex: sex,username: username,years: years,favorite_cars: [],image: "https://cdn.autobild.es/sites/navi.axelspringer.es/public/media/image/2018/01/mazda-rx-7_4.jpg");
+        userData = UserData(email: email,password: password,sex: sex,username: username,years: years,favorite_cars: [],image: "https://cdn.autobild.es/sites/navi.axelspringer.es/public/media/image/2018/01/mazda-rx-7_4.jpg",premium: false);
         createUserDB(userData!);
         toast("Registro con éxito");
         Navigator.pushReplacementNamed(context, '/login');

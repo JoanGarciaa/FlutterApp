@@ -25,6 +25,7 @@ class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int currentIndex = 0;
   Car? car;
+
   final _controller = HomeController();
 
   void toast(String message) {
@@ -177,12 +178,15 @@ class _HomePageState extends State<HomePage> {
                                               GestureDetector(
                                                 child: Icon(
                                                   Icons.favorite,
-                                                  color: cars[index].favorite == true
+                                                  color: (cars[index].favorite == true || isFavoriteSelected )
                                                       ? Colors.red
                                                       : Colors.grey,
                                                 ),
                                                 onTap: () {
                                                   favoriteCar(cars[index].id, currentUser?.email);
+                                                  setState(() {
+                                                    isFavoriteSelected = true;
+                                                  });
                                                 },
                                               )
                                             ],

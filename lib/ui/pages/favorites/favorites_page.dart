@@ -106,12 +106,19 @@ class _FavoritesPageState extends State<FavoritesPage> {
                   builder: ((context, snapshot) {
                     if (snapshot.hasData) {
                       int? value = snapshot.data;
-                      formattedPrice = value.toString().replaceAllMapped(
-                          RegExp(r'(\d{1,3})(\d{3})$'),
-                          (Match m) => '${m[1]}.${m[2]}');
+                      String formattedPrices = value.toString();
+                      if (formattedPrices.length >= 7) {
+                        formattedPrice = formattedPrices.replaceAllMapped(
+                            RegExp(r'^(\d{1,3})(\d{3})(\d{3})$'),
+                                (Match m) => '${m[1]}.${m[2]}.${m[3]}');
+                      } else {
+                        formattedPrice = formattedPrices.replaceAllMapped(
+                            RegExp(r'^(\d{1,3})(\d{3})+$'),
+                                (Match m) => '${m[1]}.${m[2]}');
+                      }
                       return Center(
                           child: Text(
-                        '$formattedPrice.000€',
+                        '$formattedPrice€',
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                             fontSize: 30,

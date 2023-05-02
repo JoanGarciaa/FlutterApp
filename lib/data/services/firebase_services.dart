@@ -152,7 +152,9 @@ Future<void> favoriteCar(String idCar, String? idUser) async {
         username: data['username'],
         years: data['years'],
         favorite_cars: data['favorite_cars'],
-        image: data['image']);
+        image: data['image'],
+        premium: data['premium']
+    );
   });
   List? carList = user?.favorite_cars;
   if (!carList!.contains(idCar)) {

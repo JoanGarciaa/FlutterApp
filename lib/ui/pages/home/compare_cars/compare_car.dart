@@ -17,7 +17,8 @@ class CompareCarsPage extends StatefulWidget {
 class _CompareCarsPageState extends State<CompareCarsPage> {
   Car? car1;
   Car? car2;
-
+  String formattedPrice01 = "";
+  String formattedPrice02 = "";
   @override
   void initState() {
     super.initState();
@@ -61,7 +62,29 @@ class _CompareCarsPageState extends State<CompareCarsPage> {
     car2 = arguments['car2'];
     print(car1?.brand);
     print(car2?.brand);
+    int? value1 = car1!.price;
+    int? value2 = car2?.price;
+    String formattedPrice1 = value1.toString();
+    String formattedPrice2 = value2.toString();
 
+    if (formattedPrice1.length >= 7) {
+      formattedPrice01 = formattedPrice1.replaceAllMapped(
+          RegExp(r'^(\d{1,3})(\d{3})(\d{3})$'),
+              (Match m) => '${m[1]}.${m[2]}.${m[3]}');
+    } else {
+      formattedPrice01 = formattedPrice1.replaceAllMapped(
+          RegExp(r'^(\d{1,3})(\d{3})+$'),
+              (Match m) => '${m[1]}.${m[2]}');
+    }
+    if (formattedPrice2.length >= 7) {
+      formattedPrice02 = formattedPrice2.replaceAllMapped(
+          RegExp(r'^(\d{1,3})(\d{3})(\d{3})$'),
+              (Match m) => '${m[1]}.${m[2]}.${m[3]}');
+    } else {
+      formattedPrice02 = formattedPrice2.replaceAllMapped(
+          RegExp(r'^(\d{1,3})(\d{3})+$'),
+              (Match m) => '${m[1]}.${m[2]}');
+    }
     return Scaffold(
       backgroundColor: Colors.mainColor,
       appBar: AppBar(
@@ -173,8 +196,8 @@ class _CompareCarsPageState extends State<CompareCarsPage> {
                   children: [
                     _buildComparisonRow(
                       'Precio',
-                      '${car1!.price.toString()}.000 €',
-                      car2 != null ? '${car2!.price}.000 €' : "X",
+                      '$formattedPrice01 €',
+                      car2 != null ? '$formattedPrice02 €' : "X",
                       Colors.deepPurple[900]!,
                     ),
                     _buildComparisonRow(
@@ -192,7 +215,7 @@ class _CompareCarsPageState extends State<CompareCarsPage> {
                     _buildComparisonRow(
                       'Velocidad Máxima',
                       '${car1!.max_speed.toString()} km/h',
-                      car2 != null ? '${car2!.max_speed.toString()} cv' : "X",
+                      car2 != null ? '${car2!.max_speed.toString()} km/h' : "X",
                       Colors.deepPurple[900]!,
                     ),
                     _buildComparisonRow(

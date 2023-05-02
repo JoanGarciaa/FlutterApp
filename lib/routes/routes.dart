@@ -19,6 +19,10 @@ abstract class Routes{
   static const SELECTED = "/selected_car";
   // ignore: constant_identifier_names
   static const RACE = "/race";
+  // ignore: constant_identifier_names
+  static const BILLBOARD = "/billboard";
+  // ignore: constant_identifier_names
+  static const CREATE = "/create_car";
 
 
 

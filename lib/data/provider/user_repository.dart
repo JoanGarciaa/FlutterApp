@@ -23,7 +23,9 @@ Future<UserData?> getUser() async {
         username: data['username'],
         years: data['years'],
         favorite_cars: data['favorite_cars'],
-        image: data['image']);
+        image: data['image'],
+        premium: data['premium']
+    );
   });
   print("esti no va?$user");
   return user;
@@ -63,8 +65,8 @@ Future<void> addUser(String name) async {
   await db.collection('users').add({'name': name});
 }
 
-Future<void> modifyUser(String uid, String newName) async {
-  await db.collection('users').doc(uid).update({'name': newName});
+Future<void> modifyUser(String? uid, bool premium) async {
+  await db.collection('users').doc(uid).update({'premium': premium});
 }
 
 Future<void> deleteUser(String uid) async {

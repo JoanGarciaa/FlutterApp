@@ -235,8 +235,6 @@ class _SimulateRaceCarState extends State<SimulateRaceCar>
         double totalForce = slopeForce + torqueForce;
         cars[i].speed += totalForce * 9.5;
         cars[i].progress += cars[i].speed / 7000;
-        print(car1!.progress);
-        print(cars[i].progress);
         if (cars[i].progress >= 1) {
           timer.cancel();
           showDialog(

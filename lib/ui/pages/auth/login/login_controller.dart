@@ -3,11 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../data/provider/google_sign_in.dart';
 import '../../../../data/services/auth.dart';
 
-class LoginController{
+class LoginController extends ChangeNotifier{
+
+  bool isLoggedIn = false;
+  String userId = '';
 
   void toast(String message) {
     Fluttertoast.showToast(
@@ -39,5 +43,29 @@ class LoginController{
     if (providerLoogin != null) {
       Navigator.pushReplacementNamed(context, '/');
     }
+  }
+
+  Future<void> checkUserSession(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? savedUserId = prefs.getString('userId');
+    if (savedUserId != null) {
+      isLoggedIn = true;
+      userId = savedUserId;
+      Navigator.pushReplacementNamed(context, '/');
+      notifyListeners();
+    }
+  }
+
+  Future<void> saveUserSession() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('userId', userId);
+  }
+
+  Future<void> deleteUserSession() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('userId');
+      isLoggedIn = false;
+      userId = '';
+      notifyListeners();
   }
 }

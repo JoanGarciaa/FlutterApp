@@ -1,10 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_app/ui/pages/home/create_car/create_car.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../../../data/models/user_data.dart';
 import '../../../data/provider/user_repository.dart';
 import '../../../data/services/firebase_services.dart';
 import '../../../utils/drawer/drawer_menu.dart';
+import '../auth/login/login_controller.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -16,6 +21,18 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int currentIndex = 3;
+  final _controllerLogin = LoginController();
+
+  void toast(String message) {
+    Fluttertoast.showToast(
+        msg: message,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.grey,
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,10 +42,19 @@ class _ProfilePageState extends State<ProfilePage> {
         gap: 8,
         tabBackgroundColor: Colors.mainColor,
         tabs: const [
-          GButton(icon: Icons.home, text: 'Home',),
+          GButton(
+            icon: Icons.home,
+            text: 'Home',
+          ),
           GButton(icon: Icons.favorite, text: 'Favoritos'),
-          GButton(icon: Icons.search, text: 'Buscar',),
-          GButton(icon: Icons.person, text: 'Perfil',),
+          GButton(
+            icon: Icons.search,
+            text: 'Buscar',
+          ),
+          GButton(
+            icon: Icons.person,
+            text: 'Perfil',
+          ),
         ],
         selectedIndex: currentIndex,
         onTabChange: (index) {
@@ -59,6 +85,25 @@ class _ProfilePageState extends State<ProfilePage> {
           icon: const Icon(Icons.view_headline_sharp),
           color: Colors.black,
           onPressed: () {
+            FutureBuilder(
+              future: getUser(),
+              builder: (context, snapshot){
+                print(snapshot);
+                if(snapshot.hasData){
+                  UserData user = snapshot.data!;
+                  bool comprove = user.premium;
+                  print(comprove);
+                  if(comprove = true){
+                    print('holahola');
+                  }else{
+                    toast('Necesitas ser premium');
+                  }
+                  return Container();
+                }else{
+                  return CircularProgressIndicator();
+                }
+              },
+            );
             if (_scaffoldKey.currentState != null) {
               _scaffoldKey.currentState!.openDrawer();
             }
@@ -72,7 +117,7 @@ class _ProfilePageState extends State<ProfilePage> {
           child: FutureBuilder(
             future: getUser(),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-              if(snapshot.hasData){
+              if (snapshot.hasData) {
                 UserData? user = snapshot.data;
                 return Column(
                   children: [
@@ -103,14 +148,16 @@ class _ProfilePageState extends State<ProfilePage> {
                       color: Colors.terciaryColor,
                     ),
                     const SizedBox(height: 20.0),
-                    _buildListTile(context, Icons.person_outline, 'Mi perfil'),
+                    _buildListTile(context, Icons.add_card_sharp, 'Hazte Premium','/premium'),
                     const SizedBox(height: 10.0),
-                    _buildListTile(context, Icons.favorite, 'Mis favoritos'),
+                    _buildListTile(context, Icons.person_outline, 'Crea para la comunidad','/create_car'),
                     const SizedBox(height: 10.0),
-                    _buildListTile(context, Icons.settings, 'Configuración'),
+                    _buildListTile(context, Icons.favorite, 'Mis favoritos','/favorites'),
                     const SizedBox(height: 10.0),
-                    _buildListTile(context, Icons.exit_to_app, 'Cerrar sesión'),
-                    const SizedBox(height: 20.0),
+                    _buildListTile(context, Icons.star, 'Trailers Nuevos Coches','/billboard'),
+                    const SizedBox(height: 10.0),
+                    _buildListTile(
+                        context, Icons.person_outline, 'Cerrar sesión','/login'),
                     const Divider(
                       height: 5,
                       color: Colors.terciaryColor,
@@ -125,7 +172,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ],
                 );
-              }else{
+              } else {
                 return const Center(child: CircularProgressIndicator());
               }
             },
@@ -135,7 +182,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _buildListTile(BuildContext context, IconData icon, String title) {
+  Widget _buildListTile(BuildContext context, IconData icon, String title,String route) {
     return ListTile(
       leading: Icon(
         icon,
@@ -148,7 +195,17 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ),
       onTap: () {
-        // Aquí puedes añadir cualquier lógica que desees al hacer clic en la opción del perfil
+        if(title == "Cerrar sesión"){
+          _controllerLogin.deleteUserSession();
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            '/login',
+                (_) => false,
+          );
+        }else{Navigator.pushReplacementNamed(context, route);
+
+
+        }
       },
     );
   }

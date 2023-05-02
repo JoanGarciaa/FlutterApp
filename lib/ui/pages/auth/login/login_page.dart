@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/main.dart';
+import 'package:flutter_app/ui/pages/home/home_page.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +9,8 @@ import '../../../../data/provider/google_sign_in.dart';
 import '../../../../data/services/auth.dart';
 import '../../../../utils/global_widgets/custom_rounded_button.dart';
 import 'login_controller.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -24,11 +27,36 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
 
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user != null) {
+        setState(() {
+          _controller.isLoggedIn = true;
+          _controller.userId = user.uid;
+        });
+        // guardar la información de inicio de sesión del usuario
+        _controller.saveUserSession();
+      } else {
+        setState(() {
+          _controller.isLoggedIn = false;
+        });
+      }
+    });
+    // comprobar si hay información de inicio de sesión guardada
+    _controller.checkUserSession(context);
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.mainColor,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text(
           "AutoSpecs",
           style: TextStyle(

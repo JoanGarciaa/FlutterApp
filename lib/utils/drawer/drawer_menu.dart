@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import '../../data/services/firebase_services.dart';
 import '../../main.dart';
 import '../../ui/pages/favorites/favorites_page.dart';
-import '../../ui/pages/finga/finga_melo.dart';
 import '../../ui/pages/home/home_page.dart';
 import '../../ui/pages/home/search_car/search_car.dart';
 import '../../ui/pages/profile/profile_page.dart';
@@ -86,14 +85,6 @@ class HomeDrawer extends StatelessWidget {
             title: const Text('crear coche'),
             onTap: () {
               addCar();
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.exit_to_app,color: Colors.terciaryColor,),
-            title: const Text('finga meló'),
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const FingaMeloPage()));
             },
           ),
         ],
