@@ -65,6 +65,10 @@ Future<void> addUser(String name) async {
   await db.collection('users').add({'name': name});
 }
 
+Future<void> userPremium(String? uid, bool premium) async {
+  await db.collection('users').doc(uid).update({'premium': premium});
+}
+
 Future<void> modifyUser(String? uid, bool premium) async {
   await db.collection('users').doc(uid).update({'premium': premium});
 }

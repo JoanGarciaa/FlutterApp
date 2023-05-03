@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/data/models/car.dart';
 import 'package:flutter_app/ui/pages/auth/login/login_page.dart';
 import 'package:flutter_app/ui/pages/auth/register/register_page.dart';
 import 'package:flutter_app/ui/pages/favorites/favorites_page.dart';
@@ -10,11 +9,11 @@ import 'package:flutter_app/ui/pages/home/compare_cars/simulate_race/simulate_ra
 import 'package:flutter_app/ui/pages/home/create_car/create_car.dart';
 import 'package:flutter_app/ui/pages/home/home_page.dart';
 import 'package:flutter_app/ui/pages/home/info_cars/info_car.dart';
+import 'package:flutter_app/ui/pages/home/premium/payment/payment_page.dart';
 import 'package:flutter_app/ui/pages/home/premium/premium_page.dart';
 import 'package:flutter_app/ui/pages/home/search_car/search_car.dart';
 import 'package:flutter_app/ui/pages/home/video_car/billboard_page.dart';
 import 'package:flutter_app/ui/pages/profile/profile_page.dart';
-import 'package:flutter_app/utils/fonts/fonts.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -39,8 +38,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           textTheme: TextTheme(
-            headline1: GoogleFonts.montserrat(fontSize: 24),
-            bodyText1: GoogleFonts.montserrat(fontSize: 16),
+            displayLarge: GoogleFonts.montserrat(fontSize: 24),
+            bodyLarge: GoogleFonts.montserrat(fontSize: 16),
           ),
         ),
         title: 'Flutter Demo',
@@ -61,6 +60,7 @@ class MyApp extends StatelessWidget {
           '/race': (context) => SimulateRaceCar(),
           '/billboard': (context) => BillBoardPage(),
           '/premium': (context) => PremiumPage(),
+          '/payment': (context) => PaymentPage(),
         },
       ));
 }

@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/data/provider/user_repository.dart';
-import 'package:flutter_app/data/services/firebase_services.dart';
-import 'package:flutter_app/utils/global_widgets/custom_rounded_button.dart';
 import 'package:flutter_awesome_buttons/flutter_awesome_buttons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -123,11 +120,9 @@ class _PremiumPageState extends State<PremiumPage> {
                                               height: 30,
                                               child: ElevatedButton(
                                                 onPressed: () {
-                                                  modifyUser(
-                                                      currentUser?.email!,
-                                                      true);
+                                                  Navigator.pushReplacementNamed(context, '/payment');
                                                 },
-                                                child: Text('Pagar'),
+                                                child: Text('Pasar a pagos'),
                                               )),
                                         )
                                       ])));
