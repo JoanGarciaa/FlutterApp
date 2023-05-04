@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math';
+import 'package:stop_watch_timer/stop_watch_timer.dart'; // Import stop_watch_timer
 
 import 'package:flutter/material.dart';
 
@@ -32,27 +33,25 @@ class SimulateRaceCar extends StatefulWidget {
 
 class _SimulateRaceCarState extends State<SimulateRaceCar>
     with SingleTickerProviderStateMixin {
-  Car? car1;
-  Car? car2;
-  late List<Cars> cars= [
+  late Car car1;
+  late Car car2;
+  late List<Cars> cars = [
     Cars(
-        name: car1!.brand,
-        power: 700,
-        weight: 1600,
-        torque: 750,
+        name: car1.brand,
+        power: car1.cv,
+        weight: car1.weight,
+        torque: car1.torque,
         speed: 0,
         progress: 0),
     Cars(
-        name: car2!.brand,
-        power: 300,
-        weight: 1640,
-        torque: 750,
+        name: car2.brand,
+        power: car2.cv,
+        weight: car2.weight,
+        torque: car2.torque,
         speed: 0,
         progress: 0),
   ];
-
-
-
+  final StopWatchTimer _stopWatchTimer = StopWatchTimer();
   bool isRacing = false;
 
   @override
@@ -63,6 +62,7 @@ class _SimulateRaceCarState extends State<SimulateRaceCar>
 
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.secondaryColor),
         title: const Text(
           "AutoSpecs",
           style: TextStyle(
@@ -115,7 +115,7 @@ class _SimulateRaceCarState extends State<SimulateRaceCar>
                               child: LinearProgressIndicator(
                                 value: cars[i].progress,
                                 backgroundColor: Colors.grey[400],
-                                valueColor: AlwaysStoppedAnimation<Color>(
+                                valueColor: const AlwaysStoppedAnimation<Color>(
                                   Colors.terciaryColor,
                                 ),
                               ),
@@ -129,13 +129,13 @@ class _SimulateRaceCarState extends State<SimulateRaceCar>
                                     size: 40,
                                   )),
                             ),
-                            Positioned.fill(child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                '${(cars[i].progress * 100).toStringAsFixed(0)}%',
-                                  // '${cars[i].speed.toStringAsFixed(0)} KM/H'
-                              ),
-                            ))
+                            Positioned.fill(
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    // '${(cars[i].progress * 100).toStringAsFixed(0)}%',
+                                      '${cars[i].speed.toStringAsFixed(0)} KM/H'),
+                                ))
                           ],
                         ),
                         const SizedBox(height: 20),
@@ -197,12 +197,34 @@ class _SimulateRaceCarState extends State<SimulateRaceCar>
                   ),
                 ),
               ),
+            SizedBox(height: 20,),
+            StreamBuilder<int>(
+              stream: _stopWatchTimer.rawTime,
+              initialData: 0,
+              builder: (context, snap) {
+                final value = snap.data;
+                final displayTime = StopWatchTimer.getDisplayTime(value!);
+                return Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Text(
+                        displayTime,
+                        style: const TextStyle(
+                            fontSize: 40,
+                            fontFamily: 'Helvetica',
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
             const Spacer(),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: ElevatedButton(
                 onPressed: isRacing ? null : startRace,
-                child: const Text('Iniciar carrera'),
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.green),
                   elevation: MaterialStateProperty.all<double>(5),
@@ -212,6 +234,7 @@ class _SimulateRaceCarState extends State<SimulateRaceCar>
                     ),
                   ),
                 ),
+                child: const Text('Iniciar carrera'),
               ),
             ),
           ],
@@ -220,22 +243,33 @@ class _SimulateRaceCarState extends State<SimulateRaceCar>
     );
   }
 
-
   void startRace() {
     isRacing = true;
     Timer.periodic(const Duration(milliseconds: 100), (timer) {
       for (int i = 0; i < cars.length; i++) {
-
-        double acceleration = (cars[i].power * 3) / cars[i].weight;
-        double friction = (9.81 * cars[i].weight * 0.01) / cars[i].weight;
-        double netForce = acceleration - friction;
-        double accelerationDueToGravity = 9.81;
-        double slopeForce = sin(atan(netForce / accelerationDueToGravity));
-        double torqueForce = cars[i].torque / cars[i].weight;
-        double totalForce = slopeForce + torqueForce;
-        cars[i].speed += totalForce * 9.5;
-        cars[i].progress += cars[i].speed / 7000;
+        _stopWatchTimer.onStartTimer();
+        const double rollingResistance = 0.01;
+        const double dragCoefficient = 0.3;
+        const double airDensity = 1.2;
+        const double frontalArea = 2.5;
+        const double deltaTime = 0.1;
+        const double trackLength = 500.0;
+        final double engineForce = cars[i].power * 95;
+        final double rollingResistanceForce =
+            rollingResistance * cars[i].weight * 9.81;
+        final double dragForce = 0.5 *
+            dragCoefficient *
+            airDensity *
+            cars[i].speed *
+            cars[i].speed *
+            frontalArea;
+        final double netForce =
+            engineForce - rollingResistanceForce - dragForce;
+        final double acceleration = netForce / cars[i].weight;
+        cars[i].speed += acceleration * deltaTime;
+        cars[i].progress += cars[i].speed * deltaTime / trackLength;
         if (cars[i].progress >= 1) {
+          _stopWatchTimer.onStopTimer();
           timer.cancel();
           showDialog(
             context: context,
@@ -245,6 +279,7 @@ class _SimulateRaceCarState extends State<SimulateRaceCar>
               actions: [
                 ElevatedButton(
                   onPressed: () {
+                    resetRace();
                     Navigator.pop(context);
                   },
                   child: const Text('Salir'),
@@ -259,11 +294,15 @@ class _SimulateRaceCarState extends State<SimulateRaceCar>
   }
 
   void resetRace() {
-    for (int i = 0; i < cars.length; i++) {
+    for (int i = 0; i < 2; i++) {
       cars[i].speed = 0;
       cars[i].progress = 0;
     }
     isRacing = false;
   }
-}
 
+  void dispose() async {
+    super.dispose();
+    await _stopWatchTimer.dispose(); // Need to call dispose function.
+  }
+}

@@ -43,6 +43,13 @@ class _SearchCarPageState extends State<SearchCarPage> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: GNav(
@@ -70,6 +77,7 @@ class _SearchCarPageState extends State<SearchCarPage> {
       ),
         drawer: const HomeDrawer(),
         appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.secondaryColor),
           title: const Text(
             "AutoSpecs",
             style: TextStyle(
@@ -132,9 +140,11 @@ class _SearchCarPageState extends State<SearchCarPage> {
                     onFieldSubmitted: (String value) {
                       onFieldSubmitted();
                     },
+                    cursorColor: Colors.terciaryColor,
                     decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.search,color: Colors.terciaryColor,),
                       labelText: 'Buscar',
+                      labelStyle: TextStyle(color: Colors.secondaryColor),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),

@@ -81,9 +81,9 @@ class _InfoCarPageState extends State<InfoCarPage> {
                         toast('Coche añadido a favoritos');
                       });
                     },
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.favorite,
-                      color: Colors.red,
+                      color: car!.favorite ? Colors.white : Colors.black,
                       size: 40,
                     ),
                   ),
