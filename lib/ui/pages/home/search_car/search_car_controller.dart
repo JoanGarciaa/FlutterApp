@@ -9,7 +9,7 @@ class SearchCarController extends ChangeNotifier{
   final repository = CarRepository();
 
   Future<List<Car>>getCarsSearch(String itemSelected) async {
-    return await repository.getAllCarsForSearch2(itemSelected);
+    return await repository.getAllCarsForSearch(itemSelected);
   }
 
 }

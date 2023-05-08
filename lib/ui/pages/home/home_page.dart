@@ -31,15 +31,6 @@ class _HomePageState extends State<HomePage> {
 
   final _controller = HomeController();
 
-  void toast(String message) {
-    Fluttertoast.showToast(
-        msg: message,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.grey,
-        textColor: Colors.white,
-        fontSize: 16.0);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                                 key: Key(cars[index].id),
                                 child: GestureDetector(
                                   onTap: () async {
-                                    await Navigator.pushNamed(context, '/info-car',
+                                    await Navigator.pushNamed(context, '/info_car',
                                         arguments: {
                                           "car": cars[index],
                                         });
@@ -187,10 +178,10 @@ class _HomePageState extends State<HomePage> {
                                                       : Colors.grey,
                                                 ),
                                                 onTap: () {
-                                                  favoriteCar(cars[index].id, currentUser?.email);
-                                                  setState(() {
-                                                    isFavoriteSelected = true;
-                                                  });
+                                                  // favoriteCar(cars[index].id, currentUser?.email);
+                                                  // setState(() {
+                                                  //   isFavoriteSelected = true;
+                                                  // });
                                                 },
                                               )
                                             ],

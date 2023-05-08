@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/ui/pages/home/premium/payment/payment_controller.dart';
 
 class PaymentPage extends StatefulWidget {
   const PaymentPage({Key? key}) : super(key: key);
@@ -9,7 +10,7 @@ class PaymentPage extends StatefulWidget {
 
 class _PaymentPageState extends State<PaymentPage> {
   final _formKey = GlobalKey<FormState>();
-
+  final _controller = PaymentController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -156,7 +157,7 @@ class _PaymentPageState extends State<PaymentPage> {
               style: ElevatedButton.styleFrom(backgroundColor: Colors.premium),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  // Aquí iría el código para realizar la compra
+                  _controller.userPremium();
                 }
               },
               child: const Padding(

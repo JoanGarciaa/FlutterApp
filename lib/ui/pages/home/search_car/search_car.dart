@@ -182,7 +182,7 @@ class _SearchCarPageState extends State<SearchCarPage> {
                             key: Key(cars![index].id),
                             child: GestureDetector(
                               onTap: () async {
-                                await Navigator.pushNamed(context, '/info-car',
+                                await Navigator.pushNamed(context, '/info_car',
                                     arguments: {
                                       "car": cars![index],
                                     });
@@ -227,13 +227,7 @@ class _SearchCarPageState extends State<SearchCarPage> {
                                                   color: Colors.black),
                                             ),
                                           ),
-                                          GestureDetector(
-                                            child: Icon(Icons.favorite, color: _isClicked? Colors.red:Colors.grey,),
-                                            onTap: () {
-                                              _handleClick();
-                                              favoriteCar(cars![index].id,user?.email);
-                                            },
-                                          )
+
                                         ],
                                       ),
                                     ),

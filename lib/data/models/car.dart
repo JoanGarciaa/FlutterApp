@@ -22,19 +22,19 @@ class Car {
 
 
   Car.fromMap(Map<String, dynamic> map) {
-    id: map["id"];
-    brand: map["brand"];
-    model: map['model'];
-    image: map['image'];
-    image2: map['image2'];
-    engine: map['engine'];
-    fuel: map['fuel'];
-    cv: map['cv'];
-    max_speed: map['max_speed'];
-    price: map['price'];
-    torque: map['torque'];
-    weight: map['weight'];
-    favorite: map['favorite'];
+    id = map['id'];
+    brand = map['brand'];
+    model = map['model'];
+    image = map['image'];
+    image2 = map['image2'];
+    engine = map['engine'];
+    fuel = map['fuel'];
+    cv = map['cv'];
+    max_speed = map['max_speed'];
+    price = map['price'];
+    torque = map['torque'];
+    weight = map['weight'];
+    favorite = map['favorite'];
   }
 
 

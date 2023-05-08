@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/ui/pages/home/compare_cars/compare_car_controller.dart';
 import 'package:flutter_app/ui/pages/home/compare_cars/simulate_race/simulate_race.dart';
 import 'package:flutter_app/utils/global_widgets/custom_rounded_button.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -6,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../data/models/car.dart';
 import '../../../../data/services/firebase_services.dart';
+import '../../../../utils/methods/methods.dart';
 
 class CompareCarsPage extends StatefulWidget {
   const CompareCarsPage({Key? key}) : super(key: key);
@@ -19,40 +21,15 @@ class _CompareCarsPageState extends State<CompareCarsPage> {
   Car? car2;
   String formattedPrice01 = "";
   String formattedPrice02 = "";
+  late CompareCarController _controller;
+
   @override
   void initState() {
+    _controller = CompareCarController();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _controller.afterFistLayout();
+    });
     super.initState();
-    _fetchCars();
-  }
-  void toast(String message) {
-    Fluttertoast.showToast(
-        msg: message,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.grey,
-        textColor: Colors.white,
-        fontSize: 16.0);
-  }
-  Future<void> _fetchCars() async {
-    // Obtener información del primer coche
-    const car1Id = '1001';
-    final car1Data = await getCar(car1Id);
-    print('bondia ${car1Data?.brand}');
-    // setState(() {
-    //   car2 = Car(
-    //     id: '1001',
-    //     brand: data['brand'],
-    //     model: data!['model'],
-    //     image: data!['image'],
-    //     image2: data!['image2'],
-    //     max_speed: data!['max_speed'],
-    //     cv: data!['cv'],
-    //     price: data!['price'],
-    //     fuel: data!['fuel'],
-    //     engine: data!['engine'],
-    //     favorite: data!['favorite'],
-    //   );
-    // });
   }
 
   @override
@@ -235,13 +212,15 @@ class _CompareCarsPageState extends State<CompareCarsPage> {
                       height: 50,
                       width: 200,
                       child: CustomRoundedButtonWithIcon(onPressed: () async {
-                        car2 != null ? await Navigator.pushNamed(context, '/race',
-                            arguments: {
-                              "car": car1,
-                              "car2": car2
-                            }) : toast("Necesitas que hayan dos coches");
-                        
-                        
+                        if(_controller.user.premium){
+                          car2 != null ? await Navigator.pushNamed(context, '/race',
+                              arguments: {
+                                "car": car1,
+                                "car2": car2
+                              }) : Methods.toast("Necesitas que hayan dos coches",context);
+                        }else{
+                          Methods.toast('Necesitas ser premium para acceder a esta funcion', context);
+                        }
                       }, title: 'Simular Carrera',
                       icon: Icons.flag,
                       size: 20,

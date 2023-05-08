@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/ui/pages/favorites/favorites_controller.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../../../data/models/car.dart';
@@ -15,15 +16,8 @@ class FavoritesPage extends StatefulWidget {
 
 class _FavoritesPageState extends State<FavoritesPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  int currentIndex = 1;
-  bool _isClicked = false;
-  String formattedPrice = "";
 
-  void _handleClick() {
-    setState(() {
-      _isClicked = !_isClicked;
-    });
-  }
+  final _controller = FavoritesController();
 
   @override
   Widget build(BuildContext context) {
@@ -47,18 +41,18 @@ class _FavoritesPageState extends State<FavoritesPage> {
             text: 'Perfil',
           ),
         ],
-        selectedIndex: currentIndex,
+        selectedIndex: _controller.currentIndex,
         onTabChange: (index) {
           setState(() {
-            currentIndex = index;
+            _controller.currentIndex = index;
           });
-          if (currentIndex == 0) {
+          if (_controller.currentIndex == 0) {
             Navigator.pushReplacementNamed(context, '/');
           }
-          if (currentIndex == 2) {
+          if (_controller.currentIndex == 2) {
             Navigator.pushReplacementNamed(context, '/search');
           }
-          if (currentIndex == 3) {
+          if (_controller.currentIndex == 3) {
             Navigator.pushReplacementNamed(context, '/profile');
           }
         },
@@ -108,17 +102,17 @@ class _FavoritesPageState extends State<FavoritesPage> {
                       int? value = snapshot.data;
                       String formattedPrices = value.toString();
                       if (formattedPrices.length >= 7) {
-                        formattedPrice = formattedPrices.replaceAllMapped(
+                        _controller.formattedPrice = formattedPrices.replaceAllMapped(
                             RegExp(r'^(\d{1,3})(\d{3})(\d{3})$'),
                                 (Match m) => '${m[1]}.${m[2]}.${m[3]}');
                       } else {
-                        formattedPrice = formattedPrices.replaceAllMapped(
+                        _controller.formattedPrice = formattedPrices.replaceAllMapped(
                             RegExp(r'^(\d{1,3})(\d{3})+$'),
                                 (Match m) => '${m[1]}.${m[2]}');
                       }
                       return Center(
                           child: Text(
-                        '$formattedPrice€',
+                        '${_controller.formattedPrice}€',
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                             fontSize: 30,
@@ -150,7 +144,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                             key: Key(cars![index].id),
                             child: GestureDetector(
                               onTap: () async {
-                                await Navigator.pushNamed(context, '/info-car',
+                                await Navigator.pushNamed(context, '/info_car',
                                     arguments: {
                                       "car": cars[index],
                                     });
@@ -197,12 +191,10 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                           GestureDetector(
                                             child: Icon(
                                               Icons.favorite,
-                                              color: _isClicked
-                                                  ? Colors.red
-                                                  : Colors.grey,
+                                              color: Colors.red
                                             ),
                                             onTap: () {
-                                              _handleClick();
+                                              _controller.handleClick();
                                               favoriteCar(cars[index].id,
                                                   currentUser?.email);
                                             },

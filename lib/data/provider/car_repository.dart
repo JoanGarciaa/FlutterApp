@@ -20,7 +20,7 @@ class CarRepository extends ChangeNotifier {
         });
       } else {
         await FirebaseFirestore.instance.collection(CAR_DB)
-          ..where('brand', isEqualTo: brand).get().then((value) {
+          .where('brand', isEqualTo: brand).get().then((value) {
             for (QueryDocumentSnapshot<Map<String, dynamic>> documentSnapshot
                 in value.docs) {
               carList.add(Car.fromMap(documentSnapshot.data()));
@@ -77,7 +77,6 @@ class CarRepository extends ChangeNotifier {
         cars.add(car);
       });
     }
-
     return cars;
   }
 

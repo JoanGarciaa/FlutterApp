@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/routes/pages.dart';
 import 'package:flutter_app/ui/pages/auth/login/login_page.dart';
 import 'package:flutter_app/ui/pages/auth/register/register_page.dart';
 import 'package:flutter_app/ui/pages/favorites/favorites_page.dart';
@@ -43,24 +44,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         title: 'Flutter Demo',
-        initialRoute: '/login',
-        routes: {
-          '/': (context) => const HomePage(),
-          // '/add': (context) => const AddUserPage(),
-          // '/modify': (context) => const ModifyUserPage(),
-          '/login': (context) => LoginPage(),
-          '/register': (context) => RegisterPage(),
-          '/info-car': (context) => InfoCarPage(),
-          '/profile': (context) => ProfilePage(),
-          '/favorites': (context) => FavoritesPage(),
-          '/search': (context) => SearchCarPage(),
-          '/compare_car': (context) => CompareCarsPage(),
-          '/selected_car': (context) => SelectedCarPage(),
-          '/create_car': (context) => CreateCarPage(),
-          '/race': (context) => SimulateRaceCar(),
-          '/billboard': (context) => BillBoardPage(),
-          '/premium': (context) => PremiumPage(),
-          '/payment': (context) => PaymentPage(),
-        },
+        initialRoute: '/splash',
+        routes: appRoutes()
       ));
 }

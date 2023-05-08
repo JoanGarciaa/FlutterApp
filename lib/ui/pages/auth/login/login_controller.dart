@@ -7,33 +7,25 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../data/provider/google_sign_in.dart';
 import '../../../../data/services/auth.dart';
+import '../../../../utils/methods/methods.dart';
 
 class LoginController extends ChangeNotifier{
 
   bool isLoggedIn = false;
   String userId = '';
 
-  void toast(String message) {
-    Fluttertoast.showToast(
-        msg: message,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.grey,
-        textColor: Colors.white,
-        fontSize: 16.0);
-  }
 
   loginUser(String email, String password, BuildContext context) async {
     try{
       await Auth().signInWithEmailAndPassword(email,password);
       if(Auth().currentUser?.emailVerified == true){
-        toast("Bienvenido $email");
+        Methods.toast("Bienvenido $email", context);
         Navigator.pushReplacementNamed(context, '/');
       }else{
-        toast("Verifica tu correo");
+        Methods.toast("Verifica tu correo",context);
       }
     }catch(error){
-      toast("El usuario no existe");
+      Methods.toast("El usuario no existe", context);
     }
   }
 

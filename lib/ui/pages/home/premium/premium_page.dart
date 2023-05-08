@@ -10,13 +10,6 @@ class PremiumPage extends StatefulWidget {
 }
 
 class _PremiumPageState extends State<PremiumPage> {
-  bool _isChecked = false;
-
-  accepTerm(bool newValue) {
-    setState(() {
-      _isChecked = newValue;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

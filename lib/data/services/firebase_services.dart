@@ -9,7 +9,12 @@ import '../models/user_data.dart';
 FirebaseFirestore db = FirebaseFirestore.instance;
 User? currentUser = FirebaseAuth.instance.currentUser;
 
+bool _isLiked = false;
+bool get isLiked  => _isLiked;
+
 class FirebaseRepository extends ChangeNotifier{
+
+
   Future<List<Car>> getAllCarsWithFavorite() async {
     List<Car> cars = [];
     List<Car> favoriteCarsList = await getMyFavoriteCars();
@@ -115,9 +120,13 @@ Future<void> favoriteCar(String idCar, String? idUser) async {
   List? carList = user?.favorite_cars;
   if (!carList!.contains(idCar)) {
     carList.add(idCar);
+    _isLiked = true;
   } else {
     carList.remove(idCar);
+    _isLiked = false;
   }
+
+  await db.collection('cars').doc(idCar).update({'favorite':true});
   await db.collection('users').doc(idUser).update({'favorite_cars': carList});
 }
 

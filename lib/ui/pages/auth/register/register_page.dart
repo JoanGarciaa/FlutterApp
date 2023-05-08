@@ -32,16 +32,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   late UserData userData;
 
-  void toast(String message) {
-    Fluttertoast.showToast(
-        msg: message,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.grey,
-        textColor: Colors.white,
-        fontSize: 16.0);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

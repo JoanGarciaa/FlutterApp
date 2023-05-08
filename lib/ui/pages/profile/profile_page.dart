@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app/ui/pages/home/create_car/create_car.dart';
+import 'package:flutter_app/ui/pages/profile/profile_controller.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
@@ -9,6 +10,7 @@ import '../../../data/models/user_data.dart';
 import '../../../data/provider/user_repository.dart';
 import '../../../data/services/firebase_services.dart';
 import '../../../utils/drawer/drawer_menu.dart';
+import '../../../utils/methods/methods.dart';
 import '../auth/login/login_controller.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -22,16 +24,8 @@ class _ProfilePageState extends State<ProfilePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int currentIndex = 3;
   final _controllerLogin = LoginController();
+  final _controller = ProfileController();
 
-  void toast(String message) {
-    Fluttertoast.showToast(
-        msg: message,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.grey,
-        textColor: Colors.white,
-        fontSize: 16.0);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +80,7 @@ class _ProfilePageState extends State<ProfilePage> {
           color: Colors.black,
           onPressed: () {
             FutureBuilder(
-              future: getUser(),
+              future: _controller.getUser(),
               builder: (context, snapshot){
                 print(snapshot);
                 if(snapshot.hasData){
@@ -96,7 +90,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   if(comprove = true){
                     print('holahola');
                   }else{
-                    toast('Necesitas ser premium');
+                    Methods.toast('Necesitas ser premium', context);
                   }
                   return Container();
                 }else{
@@ -115,7 +109,7 @@ class _ProfilePageState extends State<ProfilePage> {
           color: Colors.mainColor,
           padding: const EdgeInsets.all(20.0),
           child: FutureBuilder(
-            future: getUser(),
+            future: _controller.getUser(),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (snapshot.hasData) {
                 UserData? user = snapshot.data;

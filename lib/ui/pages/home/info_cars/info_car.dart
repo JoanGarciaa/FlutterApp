@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/ui/pages/home/info_cars/info_car_controller.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -20,18 +21,16 @@ class _InfoCarPageState extends State<InfoCarPage> {
   int index = 0;
   String formattedPrice = "";
   bool isFavorite = false;
+  final _controller = InfoCarController();
 
 
-  void toast(String message) {
-    Fluttertoast.showToast(
-        msg: message,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.grey,
-        textColor: Colors.white,
-        fontSize: 16.0);
+
+  @override
+  void initState() {
+
+    isFavorite = _controller.isLiked;
+    super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +47,7 @@ class _InfoCarPageState extends State<InfoCarPage> {
           RegExp(r'^(\d{1,3})(\d{3})+$'),
               (Match m) => '${m[1]}.${m[2]}');
     }
-    isFavorite = car?.favorite ?? false;
+    print('hoooolaaaa ${_controller.isLiked}');
     return Scaffold(
       backgroundColor: Colors.mainColor,
       appBar: AppBar(
@@ -82,8 +81,8 @@ class _InfoCarPageState extends State<InfoCarPage> {
                     onPressed: () {
                       setState(() {
                         isFavorite = !isFavorite;
-                        car!.favorite = isFavorite;
-                        favoriteCar(car!.id, currentUser?.email);
+                        _controller.favoriteCar(car!.id, currentUser?.email);
+                        print(' hooooooool $isFavorite');
                       });
                     },
                     icon: Icon(

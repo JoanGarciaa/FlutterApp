@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/ui/pages/home/create_car/create_car_controller.dart';
 import 'package:flutter_awesome_buttons/flutter_awesome_buttons.dart';
-import 'package:video_player/video_player.dart';
-
-import '../../../../data/provider/user_repository.dart';
 
 class CreateCarPage extends StatefulWidget {
   const CreateCarPage({Key? key}) : super(key: key);
@@ -12,18 +10,7 @@ class CreateCarPage extends StatefulWidget {
 }
 
 class _CreateCarPageState extends State<CreateCarPage> {
-
-  TextEditingController _controllerBrand = TextEditingController();
-  TextEditingController _controllerModel = TextEditingController();
-  TextEditingController _controllerYear = TextEditingController();
-  TextEditingController _controllerCV = TextEditingController();
-  TextEditingController _controllerFuel = TextEditingController();
-  TextEditingController _controllerMaxSpeed = TextEditingController();
-  TextEditingController _controllerEngine = TextEditingController();
-  TextEditingController _controllerPrice = TextEditingController();
-  TextEditingController _controllerNm = TextEditingController();
-  TextEditingController _controllerWeight = TextEditingController();
-  TextEditingController _controllerImage = TextEditingController();
+  final _controller = CreateCarController();
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +44,7 @@ class _CreateCarPageState extends State<CreateCarPage> {
                 children: [
                   Expanded(
                     child: TextField(
-                      controller: _controllerBrand,
+                      controller: _controller.controllerBrand,
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
@@ -71,7 +58,7 @@ class _CreateCarPageState extends State<CreateCarPage> {
                   SizedBox(width: 40),
                   Expanded(
                     child: TextField(
-                      controller: _controllerModel,
+                      controller: _controller.controllerModel,
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
@@ -93,7 +80,7 @@ class _CreateCarPageState extends State<CreateCarPage> {
                 children: [
                   Expanded(
                     child: TextField(
-                      controller: _controllerYear,
+                      controller: _controller.controllerYear,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
@@ -107,7 +94,7 @@ class _CreateCarPageState extends State<CreateCarPage> {
                   SizedBox(width: 40),
                   Expanded(
                     child: TextField(
-                      controller: _controllerCV,
+                      controller: _controller.controllerCV,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
@@ -129,7 +116,7 @@ class _CreateCarPageState extends State<CreateCarPage> {
                 children: [
                   Expanded(
                     child: TextField(
-                      controller: _controllerFuel,
+                      controller: _controller.controllerFuel,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
@@ -143,7 +130,7 @@ class _CreateCarPageState extends State<CreateCarPage> {
                   SizedBox(width: 40),
                   Expanded(
                     child: TextField(
-                      controller: _controllerMaxSpeed,
+                      controller: _controller.controllerMaxSpeed,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
@@ -165,7 +152,7 @@ class _CreateCarPageState extends State<CreateCarPage> {
                 children: [
                   Expanded(
                     child: TextField(
-                      controller: _controllerEngine,
+                      controller: _controller.controllerEngine,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
@@ -179,7 +166,7 @@ class _CreateCarPageState extends State<CreateCarPage> {
                   SizedBox(width: 40),
                   Expanded(
                     child: TextField(
-                      controller: _controllerPrice,
+                      controller: _controller.controllerPrice,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
@@ -201,7 +188,7 @@ class _CreateCarPageState extends State<CreateCarPage> {
                 children: [
                   Expanded(
                     child: TextField(
-                      controller: _controllerNm,
+                      controller: _controller.controllerNm,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
@@ -215,7 +202,7 @@ class _CreateCarPageState extends State<CreateCarPage> {
                   SizedBox(width: 40),
                   Expanded(
                     child: TextField(
-                      controller: _controllerWeight,
+                      controller: _controller.controllerWeight,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
@@ -237,7 +224,7 @@ class _CreateCarPageState extends State<CreateCarPage> {
                 children: [
                   Expanded(
                     child: TextField(
-                      controller: _controllerImage,
+                      controller: _controller.controllerImage,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
