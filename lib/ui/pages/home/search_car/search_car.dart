@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/ui/pages/home/search_car/search_car_controller.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import '../../../../data/models/car.dart';
@@ -20,6 +21,8 @@ class _SearchCarPageState extends State<SearchCarPage> {
   int currentIndex = 2;
   String? itemSelected = "";
   List<Car>? cars =[];
+
+  final _controller = SearchCarController();
 
   static const List<String> list = <String>[
     'Ver todos',
@@ -165,9 +168,9 @@ class _SearchCarPageState extends State<SearchCarPage> {
             SizedBox(
                 height: 490,
                 child: FutureBuilder(
-                  future: getAllCarsForSearch(itemSelected),
+                  future: _controller.getCarsSearch(itemSelected!),
                   builder: ((context, snapshot) {
-                    if (snapshot.hasData) {
+                    if (snapshot.hasData){
                       cars = snapshot.data;
                       return ListView.builder(
                         itemCount: cars?.length,

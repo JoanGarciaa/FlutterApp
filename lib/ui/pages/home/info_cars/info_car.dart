@@ -19,6 +19,8 @@ class _InfoCarPageState extends State<InfoCarPage> {
   Car? car;
   int index = 0;
   String formattedPrice = "";
+  bool isFavorite = false;
+
 
   void toast(String message) {
     Fluttertoast.showToast(
@@ -29,6 +31,7 @@ class _InfoCarPageState extends State<InfoCarPage> {
         textColor: Colors.white,
         fontSize: 16.0);
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +48,7 @@ class _InfoCarPageState extends State<InfoCarPage> {
           RegExp(r'^(\d{1,3})(\d{3})+$'),
               (Match m) => '${m[1]}.${m[2]}');
     }
+    isFavorite = car?.favorite ?? false;
     return Scaffold(
       backgroundColor: Colors.mainColor,
       appBar: AppBar(
@@ -77,13 +81,14 @@ class _InfoCarPageState extends State<InfoCarPage> {
                   IconButton(
                     onPressed: () {
                       setState(() {
+                        isFavorite = !isFavorite;
+                        car!.favorite = isFavorite;
                         favoriteCar(car!.id, currentUser?.email);
-                        toast('Coche añadido a favoritos');
                       });
                     },
                     icon: Icon(
                       Icons.favorite,
-                      color: car!.favorite ? Colors.white : Colors.black,
+                      color: isFavorite ? Colors.red : Colors.grey,
                       size: 40,
                     ),
                   ),
@@ -249,7 +254,7 @@ class _InfoCarPageState extends State<InfoCarPage> {
                   SizedBox(
                     height: 40,
                     child: ElevatedButton(
-                      child: Text('Ver toda la informacion'),
+                      child: Text('Ver toda la información'),
                       style: ElevatedButton.styleFrom(
                           primary: const Color.fromRGBO(233, 233, 233, 1),
                           onPrimary: Colors.secondaryColor,

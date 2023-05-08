@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../models/car.dart';
 import '../models/user_data.dart';
@@ -8,7 +9,7 @@ import '../models/user_data.dart';
 FirebaseFirestore db = FirebaseFirestore.instance;
 User? currentUser = FirebaseAuth.instance.currentUser;
 
-class FirebaseRepository {
+class FirebaseRepository extends ChangeNotifier{
   Future<List<Car>> getAllCarsWithFavorite() async {
     List<Car> cars = [];
     List<Car> favoriteCarsList = await getMyFavoriteCars();
@@ -67,54 +68,7 @@ Future<List<Car>> getAllCars() async {
   return cars;
 }
 
-Future<List<Car>> getAllCarsForSearch(String? brand) async {
-  List<Car> cars = [];
-  CollectionReference collectionReferenceUser = db.collection('cars');
-  if (brand == "Ver todos" || brand == "") {
-    QuerySnapshot queryUser = await collectionReferenceUser.get();
-    queryUser.docs.forEach((element) {
-      final Map<String, dynamic> data = element.data() as Map<String, dynamic>;
-      Car car = Car(
-          id: element.id,
-          brand: data['brand'],
-          model: data['model'],
-          image: data['image'],
-          image2: data['image2'],
-          max_speed: data['max_speed'],
-          cv: data['cv'],
-          price: data['price'],
-          fuel: data['fuel'],
-          engine: data['engine'],
-          favorite: data['favorite'],
-          torque: data['torque'],
-          weight: data['weight']);
-      cars.add(car);
-    });
-  } else {
-    QuerySnapshot queryUser =
-        await collectionReferenceUser.where('brand', isEqualTo: brand).get();
-    queryUser.docs.forEach((element) {
-      final Map<String, dynamic> data = element.data() as Map<String, dynamic>;
-      Car car = Car(
-          id: element.id,
-          brand: data['brand'],
-          model: data['model'],
-          image: data['image'],
-          image2: data['image2'],
-          max_speed: data['max_speed'],
-          cv: data['cv'],
-          price: data['price'],
-          fuel: data['fuel'],
-          engine: data['engine'],
-          favorite: data['favorite'],
-          torque: data['torque'],
-          weight: data['weight']);
-      cars.add(car);
-    });
-  }
 
-  return cars;
-}
 
 Future<Car?> getCar(String? id) async {
   Car? car;

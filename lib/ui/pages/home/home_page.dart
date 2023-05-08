@@ -22,9 +22,12 @@ class _HomePageState extends State<HomePage> {
   User? currentUser = FirebaseAuth.instance.currentUser;
   UserData? user;
   bool isFavoriteSelected = false;
+
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int currentIndex = 0;
   Car? car;
+  List<bool> favoriteCars = [];
 
   final _controller = HomeController();
 
@@ -120,7 +123,8 @@ class _HomePageState extends State<HomePage> {
                       future: _controller.getCarsHome(),
                       builder: ((context, snapshot) {
                         if (snapshot.hasData) {
-                          List<Car>? cars = snapshot.data;
+                          // isFavoriteSelected = car?.favorite ?? false;
+                          List<Car> cars = snapshot.data;
                           return ListView.builder(
                             itemCount: 6,
                             shrinkWrap: true,
@@ -128,7 +132,7 @@ class _HomePageState extends State<HomePage> {
                               return Card(
                                 elevation: 5.0,
                                 shadowColor: Colors.terciaryColor,
-                                key: Key(cars![index].id),
+                                key: Key(cars[index].id),
                                 child: GestureDetector(
                                   onTap: () async {
                                     await Navigator.pushNamed(context, '/info-car',
