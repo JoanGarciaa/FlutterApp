@@ -20,6 +20,7 @@ class _SelectedCarPageState extends State<SelectedCarPage> {
 
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.secondaryColor),
         title: const Text(
           "AutoSpecs",
           style: TextStyle(

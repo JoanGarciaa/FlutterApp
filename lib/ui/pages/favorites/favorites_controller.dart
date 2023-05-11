@@ -4,12 +4,12 @@ class FavoritesController extends ChangeNotifier{
 
   int _currentIndex = 1;
   int get currentIndex => _currentIndex;
+  bool isClicked = false;
+  String formattedPrice = "";
+
   set currentIndex(int value){
     _currentIndex = value;
   }
-
-  bool isClicked = false;
-  String formattedPrice = "";
 
   void handleClick() {
     isClicked = !isClicked;

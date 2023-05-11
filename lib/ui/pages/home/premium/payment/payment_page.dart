@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/ui/pages/home/premium/payment/payment_controller.dart';
+import 'package:flutter_app/ui/pages/home/premium/payment/widgets/text_form_field_payment.dart';
 
 class PaymentPage extends StatefulWidget {
   const PaymentPage({Key? key}) : super(key: key);
@@ -11,6 +12,7 @@ class PaymentPage extends StatefulWidget {
 class _PaymentPageState extends State<PaymentPage> {
   final _formKey = GlobalKey<FormState>();
   final _controller = PaymentController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,148 +33,74 @@ class _PaymentPageState extends State<PaymentPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-            const Text(
-            'AUTOSPECS PREMIUM ',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 16),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: Colors.grey[200],
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: [
-                  const Icon(Icons.monetization_on),
-                  const SizedBox(width: 16),
-                  const Text(
-                    '\$1.99',
-                    style: TextStyle(
-                        fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                ],
+              const Text(
+                'AUTOSPECS PREMIUM ',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-            ),
-          ),
-          const SizedBox(height: 16),
-          const Text(
-            'Disfruta de accesos premium en la aplicación y de nuevas implementaciones',
-            style: TextStyle(fontSize: 14),
-          ),
-          const SizedBox(height: 16),
-          Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                TextFormField(
-                  cursorColor: Colors.terciaryColor,
-                  decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.terciaryColor),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.terciaryColor),
-                    ),
-                    labelText: 'Nombre del titular',
-                    labelStyle: TextStyle(color: Colors.black),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor ingresa el nombre del titular de la tarjeta';
-                    }
-                    return null;
-                  },
+              const SizedBox(height: 16),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: Colors.grey[200],
                 ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  cursorColor: Colors.terciaryColor,
-                  decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.terciaryColor),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.terciaryColor),
-                    ),
-                    labelText: 'Número de tarjeta',
-                    labelStyle: TextStyle(color: Colors.black),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.monetization_on),
+                      const SizedBox(width: 16),
+                      const Text(
+                        '\$1.99',
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
+                    ],
                   ),
-                  keyboardType: TextInputType.number,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor ingresa el número de tu tarjeta de crédito';
-                    }
-                    return null;
-                  },
                 ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  cursorColor: Colors.terciaryColor,
-                  decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.terciaryColor),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.terciaryColor),
-                    ),
-                    labelText: 'Fecha de expiración (MM/YY)',
-                    labelStyle: TextStyle(color: Colors.black),
-                  ),
-                  keyboardType: TextInputType.datetime,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor ingresa la fecha de expiración de tu tarjeta de crédito';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  cursorColor: Colors.terciaryColor,
-                  decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.terciaryColor),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.terciaryColor),
-                    ),
-                    labelText: 'Código de seguridad',
-                    labelStyle: TextStyle(color: Colors.black),
-                  ),
-                  keyboardType: TextInputType.number,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor ingresa el código de seguridad de tu tarjeta de crédito';
-                    }
-                    return null;
-                  },
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 30),
-          Center(
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.premium),
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  _controller.userPremium();
-                }
-              },
-              child: const Padding(
-                padding: EdgeInsets.symmetric(vertical: 16.0),
-                child: Text(
-                    'Hazme Premium',
-                    style: TextStyle(fontSize: 20, color: Colors.black),
               ),
-            ),
+              const SizedBox(height: 16),
+              const Text(
+                'Disfruta de accesos premium en la aplicación y de nuevas implementaciones',
+                style: TextStyle(fontSize: 14),
+              ),
+              const SizedBox(height: 16),
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormFieldPayment(label: 'Nombre del titular', valueError: 'Por favor ingresa el nombre de tu tarjeta de crédito',),
+                    const SizedBox(height: 16),
+                    TextFormFieldPayment(label: 'Número de tarjeta', valueError: 'Por favor ingresa el número de tu tarjeta de crédito',),
+                    const SizedBox(height: 16),
+                    TextFormFieldPayment(label: 'Fecha de expiración (MM/YY)', valueError: 'Por favor ingresa la fecha de expiración de tu tarjeta de crédito',),
+                    const SizedBox(height: 16),
+                    TextFormFieldPayment(label: 'Código de seguridad', valueError: 'Por favor ingresa el codigo de seguridad de tu tarjeta de crédito',),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 30),
+              Center(
+                child: ElevatedButton(
+                  style:
+                      ElevatedButton.styleFrom(backgroundColor: Colors.premium),
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      _controller.userPremium();
+                    }
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    child: Text(
+                      'Hazme Premium',
+                      style: TextStyle(fontSize: 20, color: Colors.black),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
-          ),
-        ],
       ),
-    ),
-    ),
     );
   }
 }

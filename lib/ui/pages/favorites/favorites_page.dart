@@ -27,19 +27,10 @@ class _FavoritesPageState extends State<FavoritesPage> {
         gap: 8,
         tabBackgroundColor: Colors.mainColor,
         tabs: const [
-          GButton(
-            icon: Icons.home,
-            text: 'Home',
-          ),
+          GButton(icon: Icons.home, text: 'Home'),
           GButton(icon: Icons.favorite, text: 'Favoritos'),
-          GButton(
-            icon: Icons.search,
-            text: 'Buscar',
-          ),
-          GButton(
-            icon: Icons.person,
-            text: 'Perfil',
-          ),
+          GButton(icon: Icons.search, text: 'Buscar'),
+          GButton(icon: Icons.person, text: 'Perfil'),
         ],
         selectedIndex: _controller.currentIndex,
         onTabChange: (index) {
@@ -193,11 +184,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                               Icons.favorite,
                                               color: Colors.red
                                             ),
-                                            onTap: () {
-                                              _controller.handleClick();
-                                              favoriteCar(cars[index].id,
-                                                  currentUser?.email);
-                                            },
+                                            onTap: () {},
                                           )
                                         ],
                                       ),

@@ -26,7 +26,6 @@ class _ProfilePageState extends State<ProfilePage> {
   final _controllerLogin = LoginController();
   final _controller = ProfileController();
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,19 +80,19 @@ class _ProfilePageState extends State<ProfilePage> {
           onPressed: () {
             FutureBuilder(
               future: _controller.getUser(),
-              builder: (context, snapshot){
+              builder: (context, snapshot) {
                 print(snapshot);
-                if(snapshot.hasData){
+                if (snapshot.hasData) {
                   UserData user = snapshot.data!;
                   bool comprove = user.premium;
                   print(comprove);
-                  if(comprove = true){
+                  if (comprove = true) {
                     print('holahola');
-                  }else{
+                  } else {
                     Methods.toast('Necesitas ser premium', context);
                   }
                   return Container();
-                }else{
+                } else {
                   return CircularProgressIndicator();
                 }
               },
@@ -142,16 +141,20 @@ class _ProfilePageState extends State<ProfilePage> {
                       color: Colors.terciaryColor,
                     ),
                     const SizedBox(height: 20.0),
-                    _buildListTile(context, Icons.add_card_sharp, 'Hazte Premium','/premium'),
+                    _buildListTile(context, Icons.add_card_sharp,
+                        'Hazte Premium', '/premium'),
                     const SizedBox(height: 10.0),
-                    _buildListTile(context, Icons.person_outline, 'Crea para la comunidad','/create_car'),
-                    const SizedBox(height: 10.0),
-                    _buildListTile(context, Icons.favorite, 'Mis favoritos','/favorites'),
-                    const SizedBox(height: 10.0),
-                    _buildListTile(context, Icons.star, 'Trailers Nuevos Coches','/billboard'),
+                    _buildListTile(context, Icons.person_outline,
+                        'Crea para la comunidad', '/create_car'),
                     const SizedBox(height: 10.0),
                     _buildListTile(
-                        context, Icons.person_outline, 'Cerrar sesión','/login'),
+                        context, Icons.favorite, 'Mis favoritos', '/favorites'),
+                    const SizedBox(height: 10.0),
+                    _buildListTile(context, Icons.star,
+                        'Trailers Nuevos Coches', '/billboard'),
+                    const SizedBox(height: 10.0),
+                    _buildListTile(context, Icons.person_outline,
+                        'Cerrar sesión', '/login'),
                     const Divider(
                       height: 5,
                       color: Colors.terciaryColor,
@@ -176,7 +179,8 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _buildListTile(BuildContext context, IconData icon, String title,String route) {
+  Widget _buildListTile(
+      BuildContext context, IconData icon, String title, String route) {
     return ListTile(
       leading: Icon(
         icon,
@@ -189,16 +193,29 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ),
       onTap: () {
-        if(title == "Cerrar sesión"){
-          _controllerLogin.deleteUserSession();
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            '/login',
-                (_) => false,
-          );
-        }else{Navigator.pushReplacementNamed(context, route);
-
-
+        if (title == "Cerrar sesión") {
+          showModalBottomSheet(
+              context: context,
+              builder: (BuildContext context) {
+                return Container(
+                  height: 50,
+                  color: Colors.red,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                    onPressed: () {
+                      _controllerLogin.deleteUserSession();
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        '/login',
+                        (_) => false,
+                      );
+                    },
+                    child: Text('Cerrar sesión'),
+                  ),
+                );
+              });
+        } else {
+          Navigator.pushNamed(context, route);
         }
       },
     );

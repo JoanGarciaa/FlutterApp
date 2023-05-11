@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/ui/pages/home/search_car/search_car_controller.dart';
+import 'package:flutter_app/ui/pages/home/search_car/widgets/item_car_search.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import '../../../../data/models/car.dart';
@@ -188,52 +189,7 @@ class _SearchCarPageState extends State<SearchCarPage> {
                                     });
                                 setState(() {});
                               },
-                              child: Container(
-                                height: 200,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                        cars![index].image),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(16.0),
-                                      child: Text(
-                                        cars![index].brand,
-                                        style: const TextStyle(
-                                            fontSize: 24,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                    Container(
-                                      color: Colors.white,
-                                      width: double.infinity,
-                                      height: 45,
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            child: Text(
-                                              cars![index].model,
-                                              style: const TextStyle(
-                                                  fontSize: 16,
-                                                  color: Colors.black),
-                                            ),
-                                          ),
-
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              child: ItemCarSearch(cars: cars!, index: index,)
                             ),
                           );
                         },

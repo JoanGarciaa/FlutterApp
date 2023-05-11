@@ -65,6 +65,7 @@ class _CompareCarsPageState extends State<CompareCarsPage> {
     return Scaffold(
       backgroundColor: Colors.mainColor,
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.secondaryColor),
         title: const Text(
           "AutoSpecs",
           style: TextStyle(

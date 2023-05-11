@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,6 +10,12 @@ import '../../../../data/services/firebase_services.dart';
 class InfoCarController extends ChangeNotifier {
   bool _isLiked = false;
   bool get isLiked => _isLiked;
+
+  void set isLiked(bool value){
+    value = isLiked;
+  }
+
+
   String USER_DB = 'users';
   Future<UserData> getUser() async {
     late UserData user;
@@ -40,7 +48,7 @@ class InfoCarController extends ChangeNotifier {
   }
 
   void afterFistLayout(){
-    isFavoriteCar('1000');
+    // isFavoriteCar();
   }
 
   Future<void> favoriteCar(String idCar, String? idUser) async {
@@ -98,10 +106,12 @@ class InfoCarController extends ChangeNotifier {
           premium: data['premium']);
     });
     List? carList = user?.favorite_cars;
-    if (!carList!.contains(idCar)) {
+    if (carList!.contains(idCar)) {
+      print('estoy donde el like tiene que ser true');
       _isLiked = true;
       notifyListeners();
     } else {
+      print('estoy donde el like tiene que ser false');
       _isLiked = false;
       notifyListeners();
     }
