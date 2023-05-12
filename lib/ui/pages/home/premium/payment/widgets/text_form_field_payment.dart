@@ -16,12 +16,12 @@ class TextFormFieldPayment extends StatelessWidget {
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.terciaryColor),
         ),
-        labelText: 'Nombre del titular',
+        labelText: label,
         labelStyle: TextStyle(color: Colors.black),
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Por favor ingresa el nombre del titular de la tarjeta';
+          return valueError;
         }
         return null;
       },

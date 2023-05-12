@@ -8,6 +8,7 @@ import '../../../../data/models/user_data.dart';
 import '../../../../data/services/firebase_services.dart';
 
 class InfoCarController extends ChangeNotifier {
+  String USER_DB = 'users';
   bool _isLiked = false;
   bool get isLiked => _isLiked;
 
@@ -15,8 +16,6 @@ class InfoCarController extends ChangeNotifier {
     value = isLiked;
   }
 
-
-  String USER_DB = 'users';
   Future<UserData> getUser() async {
     late UserData user;
     User? currentUser = FirebaseAuth.instance.currentUser;
@@ -27,23 +26,6 @@ class InfoCarController extends ChangeNotifier {
         print(user.email);
       }
     });
-    // QuerySnapshot queryUser = await collectionReferenceUser
-    //     .where('email', isEqualTo: currentUser?.email)
-    //     .get();
-    // queryUser.docs.forEach((element) {
-    //   final Map<String, dynamic> data =
-    //   queryUser.docs[0].data() as Map<String, dynamic>;
-    //   user = UserData(
-    //       email: data['email'],
-    //       password: data['password'],
-    //       sex: data['sex'],
-    //       username: data['username'],
-    //       years: data['years'],
-    //       favorite_cars: data['favorite_cars'],
-    //       image: data['image'],
-    //       premium: data['premium']
-    //   );
-    // });
     return user;
   }
 

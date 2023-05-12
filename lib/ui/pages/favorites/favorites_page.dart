@@ -87,7 +87,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
             SizedBox(
                 height: 100,
                 child: FutureBuilder(
-                  future: getTotalValueGarage(),
+                  future: _controller.getValueGarage(),
                   builder: ((context, snapshot) {
                     if (snapshot.hasData) {
                       int? value = snapshot.data;
@@ -121,7 +121,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
             SizedBox(
                 height: 490,
                 child: FutureBuilder(
-                  future: getMyFavoriteCars(),
+                  future: _controller.getMyFavoriteCars(),
                   builder: ((context, snapshot) {
                     if (snapshot.hasData) {
                       List<Car>? cars = snapshot.data;

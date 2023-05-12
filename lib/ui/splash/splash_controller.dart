@@ -19,5 +19,16 @@ class SplashController extends ChangeNotifier{
       Navigator.pushReplacementNamed(context, '/');
       notifyListeners();
     }
+    else{
+      Navigator.pushReplacementNamed(context, '/login');
+    }
+  }
+
+  Future<void> deleteUserSession() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isLoggedIn = false;
+    userId = '';
+    await prefs.remove('userId');
+    notifyListeners();
   }
 }

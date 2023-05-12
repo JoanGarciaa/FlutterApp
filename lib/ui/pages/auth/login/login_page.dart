@@ -28,26 +28,6 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _controllerPassword = TextEditingController();
 
 
-  @override
-  void initState() {
-    super.initState();
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user != null) {
-        setState(() {
-          _controller.isLoggedIn = true;
-          _controller.userId = user.uid;
-        });
-        // guardar la información de inicio de sesión del usuario
-        _controller.saveUserSession();
-      } else {
-        setState(() {
-          _controller.isLoggedIn = false;
-        });
-      }
-    });
-    // comprobar si hay información de inicio de sesión guardada
-    _controller.checkUserSession(context);
-  }
 
 
 

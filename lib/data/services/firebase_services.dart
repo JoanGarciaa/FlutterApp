@@ -15,37 +15,7 @@ bool get isLiked  => _isLiked;
 class FirebaseRepository extends ChangeNotifier{
 
 
-  Future<List<Car>> getAllCarsWithFavorite() async {
-    List<Car> cars = [];
-    List<Car> favoriteCarsList = await getMyFavoriteCars();
-    CollectionReference collectionReferenceUser = db.collection('cars');
-    QuerySnapshot queryUser = await collectionReferenceUser.get();
-    queryUser.docs.forEach((element) {
-      bool isCarFavorite = false;
-      final Map<String, dynamic> data = element.data() as Map<String, dynamic>;
-      for (Car car in favoriteCarsList) {
-        if (car.id == data['id']) {
-          isCarFavorite = true;
-        }
-      }
-      Car car = Car(
-          id: element.id,
-          brand: data['brand'],
-          model: data['model'],
-          image: data['image'],
-          image2: data['image2'],
-          max_speed: data['max_speed'],
-          cv: data['cv'],
-          fuel: data['fuel'],
-          engine: data['engine'],
-          favorite: isCarFavorite,
-          price: data['price'],
-          torque: data['torque'],
-          weight: data['weight']);
-      cars.add(car);
-    });
-    return cars;
-  }
+
 }
 
 Future<List<Car>> getAllCars() async {
@@ -130,92 +100,9 @@ Future<void> favoriteCar(String idCar, String? idUser) async {
   await db.collection('users').doc(idUser).update({'favorite_cars': carList});
 }
 
-Future<List<Car>> getMyFavoriteCars() async {
-  List<Car> favoriteCars = [];
-  QuerySnapshot? queryCar;
-  List<QuerySnapshot?> queryCarList = [];
-  User? currentUser = FirebaseAuth.instance.currentUser;
-  CollectionReference collectionReferenceUser = db.collection('users');
-  QuerySnapshot queryUser = await collectionReferenceUser
-      .where('email', isEqualTo: currentUser?.email)
-      .get();
 
-  for (String id in queryUser.docs[0].get('favorite_cars')) {
-    CollectionReference collectionReferenceCar = db.collection('cars');
-    queryCar = await collectionReferenceCar.where('id', isEqualTo: id).get();
-    queryCarList.add(queryCar);
-  }
 
-  queryCarList.forEach((element) {
-    element?.docs.forEach((element) {
-      final Map<String, dynamic> data = element.data() as Map<String, dynamic>;
-      Car car = Car(
-          id: element.id,
-          brand: data['brand'],
-          model: data['model'],
-          image: data['image'],
-          image2: data['image2'],
-          max_speed: data['max_speed'],
-          cv: data['cv'],
-          price: data['price'],
-          fuel: data['fuel'],
-          engine: data['engine'],
-          favorite: data['favorite'],
-          torque: data['torque'],
-          weight: data['weight']);
-      favoriteCars.add(car);
-      int totalPrices = favoriteCars.fold(
-          0, (previousValue, car) => previousValue + car.price);
-      print(totalPrices);
-    });
-  });
 
-  return favoriteCars;
-}
-
-Future<int> getTotalValueGarage() async {
-  List<Car> favoriteCars = [];
-  QuerySnapshot? queryCar;
-  List<QuerySnapshot?> queryCarList = [];
-  int totalPrices = 0;
-  User? currentUser = FirebaseAuth.instance.currentUser;
-  CollectionReference collectionReferenceUser = db.collection('users');
-  QuerySnapshot queryUser = await collectionReferenceUser
-      .where('email', isEqualTo: currentUser?.email)
-      .get();
-
-  for (String id in queryUser.docs[0].get('favorite_cars')) {
-    CollectionReference collectionReferenceCar = db.collection('cars');
-    queryCar = await collectionReferenceCar.where('id', isEqualTo: id).get();
-    queryCarList.add(queryCar);
-  }
-
-  queryCarList.forEach((element) {
-    element?.docs.forEach((element) {
-      final Map<String, dynamic> data = element.data() as Map<String, dynamic>;
-      Car car = Car(
-          id: element.id,
-          brand: data['brand'],
-          model: data['model'],
-          image: data['image'],
-          image2: data['image2'],
-          max_speed: data['max_speed'],
-          cv: data['cv'],
-          price: data['price'],
-          fuel: data['fuel'],
-          engine: data['engine'],
-          favorite: data['favorite'],
-          torque: data['torque'],
-          weight: data['weight']);
-      favoriteCars.add(car);
-      totalPrices = favoriteCars.fold(
-          0, (previousValue, car) => previousValue + car.price);
-      print(totalPrices);
-    });
-  });
-
-  return totalPrices;
-}
 
 Future<void> addCar() async {
   String id = "1012";

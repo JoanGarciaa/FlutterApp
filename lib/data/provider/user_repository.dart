@@ -18,49 +18,8 @@ class UserRepository extends ChangeNotifier{
         print(user.email);
       }
     });
-    // QuerySnapshot queryUser = await collectionReferenceUser
-    //     .where('email', isEqualTo: currentUser?.email)
-    //     .get();
-    // queryUser.docs.forEach((element) {
-    //   final Map<String, dynamic> data =
-    //   queryUser.docs[0].data() as Map<String, dynamic>;
-    //   user = UserData(
-    //       email: data['email'],
-    //       password: data['password'],
-    //       sex: data['sex'],
-    //       username: data['username'],
-    //       years: data['years'],
-    //       favorite_cars: data['favorite_cars'],
-    //       image: data['image'],
-    //       premium: data['premium']
-    //   );
-    // });
     return user;
   }
-
-  // Future<List<Car>> getAllCarsForSearch(String? brand) async {
-  //   List<Car> carList = [];
-  //
-  //   if (brand == "Ver todos" || brand == "") {
-  //     await FirebaseFirestore.instance.collection(CAR_DB).get().then((value) {
-  //       for (QueryDocumentSnapshot<Map<String, dynamic>> documentSnapshot
-  //       in value.docs) {
-  //         carList.add(Car.fromMap(documentSnapshot.data()));
-  //       }
-  //     });
-  //   } else {
-  //     await FirebaseFirestore.instance.collection(CAR_DB)
-  //         .where('brand', isEqualTo: brand).get().then((value) {
-  //       for (QueryDocumentSnapshot<Map<String, dynamic>> documentSnapshot
-  //       in value.docs) {
-  //         carList.add(Car.fromMap(documentSnapshot.data()));
-  //       }
-  //     });
-  //   };
-  //
-  //   return carList;
-  // }
-
 
 
 
@@ -75,12 +34,6 @@ class UserRepository extends ChangeNotifier{
 
       user.add(person);
     });
-    // for (var element in queryUser.docs) {
-    //   final Map<String, dynamic> data = element.data() as Map<String, dynamic>;
-    //   final person = {"username": data['username'], "uid": element.id};
-    //
-    //   user.add(person);
-    // }
     return user;
   }
 

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/ui/pages/home/premium/payment/payment_controller.dart';
 import 'package:flutter_app/ui/pages/home/premium/payment/widgets/text_form_field_payment.dart';
+import 'package:lottie/lottie.dart';
+
+import '../../../../../utils/methods/methods.dart';
 
 class PaymentPage extends StatefulWidget {
   const PaymentPage({Key? key}) : super(key: key);
@@ -83,9 +86,12 @@ class _PaymentPageState extends State<PaymentPage> {
                 child: ElevatedButton(
                   style:
                       ElevatedButton.styleFrom(backgroundColor: Colors.premium),
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       _controller.userPremium();
+                      await Future.delayed(Duration(seconds: 2));
+                      Navigator.pushReplacementNamed(context, '/');
+                      Methods.toast("Felicidades, acabas de adquirir el premium, ya puedes utilizar todas las funciones", context);
                     }
                   },
                   child: const Padding(
