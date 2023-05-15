@@ -109,7 +109,7 @@ class _HomePageState extends State<HomePage> {
                       )),
                 ),
                 Container(
-                    height: 491,
+                    height: 500,
                     child: FutureBuilder(
                       future: _controller.getCarsHome(),
                       builder: ((context, snapshot) {

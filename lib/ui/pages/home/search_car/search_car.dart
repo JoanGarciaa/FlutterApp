@@ -20,25 +20,11 @@ class _SearchCarPageState extends State<SearchCarPage> {
   bool _isClicked = false;
   UserData? user;
   int currentIndex = 2;
-  String? itemSelected = "";
   List<Car>? cars =[];
 
   final _controller = SearchCarController();
 
-  static const List<String> list = <String>[
-    'Ver todos',
-    'Audi',
-    'BMW',
-    'Ford',
-    'Ferrari',
-    'Lexus',
-    'Lamborguini',
-    'Mclaren',
-    'Mercedes',
-    'Nissan',
-    'Porsche',
-    'Volkswagen'
-  ];
+
 
   void _handleClick() {
     setState(() {
@@ -50,7 +36,6 @@ class _SearchCarPageState extends State<SearchCarPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
   }
 
   @override
@@ -102,7 +87,7 @@ class _SearchCarPageState extends State<SearchCarPage> {
                 optionsBuilder: (TextEditingValue textEditingValue){
                   if(textEditingValue == ''){
                     return const Iterable<String>.empty();
-                  }return list.where((String item){
+                  }return _controller.list.where((String item){
                     return item.contains(textEditingValue.text);
                   });
                 },
@@ -160,7 +145,7 @@ class _SearchCarPageState extends State<SearchCarPage> {
                 },
                 onSelected: (item){
                   setState(() {
-                    itemSelected = item;
+                    _controller.setItemSelected(item);
                   });
                   cars?.clear();
                 },
@@ -169,7 +154,7 @@ class _SearchCarPageState extends State<SearchCarPage> {
             SizedBox(
                 height: 490,
                 child: FutureBuilder(
-                  future: _controller.getCarsSearch(itemSelected!),
+                  future: _controller.getCarsSearch(_controller.itemSelected!),
                   builder: ((context, snapshot) {
                     if (snapshot.hasData){
                       cars = snapshot.data;

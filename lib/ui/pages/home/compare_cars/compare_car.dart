@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/ui/pages/home/compare_cars/compare_car_controller.dart';
 import 'package:flutter_app/ui/pages/home/compare_cars/simulate_race/simulate_race.dart';
+import 'package:flutter_app/ui/pages/home/compare_cars/widgets/compare_specs.dart';
+import 'package:flutter_app/ui/pages/home/compare_cars/widgets/images_compare.dart';
 import 'package:flutter_app/utils/global_widgets/custom_rounded_button.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -37,8 +39,6 @@ class _CompareCarsPageState extends State<CompareCarsPage> {
     final Map arguments = ModalRoute.of(context)!.settings.arguments as Map;
     car1 = arguments['car'];
     car2 = arguments['car2'];
-    print(car1?.brand);
-    print(car2?.brand);
     int? value1 = car1!.price;
     int? value2 = car2?.price;
     String formattedPrice1 = value1.toString();
@@ -80,91 +80,7 @@ class _CompareCarsPageState extends State<CompareCarsPage> {
         children: [
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        car1!.brand,
-                        style: TextStyle(
-                          fontSize: 24.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.deepPurple[900],
-                        ),
-                      ),
-                      Text(
-                        car1!.model,
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          color: Colors.grey[800],
-                        ),
-                      ),
-                      const SizedBox(height: 16.0),
-                      Container(
-                        height: 100.0,
-                        width: 150.0,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                          image: DecorationImage(
-                            image: NetworkImage(car1!.image),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        car2 != null ? car2!.brand : "Escoge",
-                        style: TextStyle(
-                          fontSize: 24.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.deepPurple[900],
-                        ),
-                      ),
-                      Text(
-                        car2 != null ? car2!.model : "Un coche",
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          color: Colors.grey[800],
-                        ),
-                      ),
-                      const SizedBox(height: 16.0),
-                      GestureDetector(
-                        child: Container(
-                          height: 100.0,
-                          width: 150.0,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                car2 != null
-                                    ? car2!.image
-                                    : "https://cdn-icons-png.flaticon.com/512/89/89102.png",
-                              ),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        onTap: () {
-                          Navigator.pushNamed(context, '/selected_car',
-                              arguments: {
-                                "car": car1,
-                              });
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+            child:ImagesCompare(car1: car1,car2: car2,)
           ),
           Expanded(
             child: SingleChildScrollView(

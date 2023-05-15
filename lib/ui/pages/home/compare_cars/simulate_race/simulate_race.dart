@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math';
+import 'package:flutter_app/ui/pages/home/compare_cars/simulate_race/widgets/simulate_specs.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart'; // Import stop_watch_timer
 
 import 'package:flutter/material.dart';
@@ -35,6 +36,7 @@ class _SimulateRaceCarState extends State<SimulateRaceCar>
     with SingleTickerProviderStateMixin {
   late Car car1;
   late Car car2;
+
   late List<Cars> cars = [
     Cars(
         name: car1.brand,
@@ -51,6 +53,7 @@ class _SimulateRaceCarState extends State<SimulateRaceCar>
         speed: 0,
         progress: 0),
   ];
+
   final StopWatchTimer _stopWatchTimer = StopWatchTimer();
   bool isRacing = false;
 
@@ -96,104 +99,7 @@ class _SimulateRaceCarState extends State<SimulateRaceCar>
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          cars[i].name,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        Stack(
-                          children: [
-                            SizedBox(
-                              height: 70,
-                              width: 300,
-                              child: LinearProgressIndicator(
-                                value: cars[i].progress,
-                                backgroundColor: Colors.grey[400],
-                                valueColor: const AlwaysStoppedAnimation<Color>(
-                                  Colors.terciaryColor,
-                                ),
-                              ),
-                            ),
-                            const Positioned.fill(
-                              child: Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Icon(
-                                    Icons.flag,
-                                    color: Colors.green,
-                                    size: 40,
-                                  )),
-                            ),
-                            Positioned.fill(
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    // '${(cars[i].progress * 100).toStringAsFixed(0)}%',
-                                      '${cars[i].speed.toStringAsFixed(0)} KM/H'),
-                                ))
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Potencia',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  '${cars[i].power} CV',
-                                  style: const TextStyle(fontSize: 16),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Peso',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  '${cars[i].weight} kg',
-                                  style: const TextStyle(fontSize: 16),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Par',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  '${cars[i].torque} Nm',
-                                  style: const TextStyle(fontSize: 16),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                    child: SimulateSpecs(cars: cars,i: i,),
                   ),
                 ),
               ),
