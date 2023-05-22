@@ -12,8 +12,6 @@ class CreateCarPage extends StatefulWidget {
 }
 
 class _CreateCarPageState extends State<CreateCarPage> {
-  final _controller = CreateCarController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

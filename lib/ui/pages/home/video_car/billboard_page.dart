@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
 class BillBoardPage extends StatefulWidget {
   const BillBoardPage({Key? key}) : super(key: key);
 
@@ -15,8 +14,7 @@ class _BillBoardPageState extends State<BillBoardPage> {
 
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.asset(
-        'assets/videos/videomercedes.mp4')
+    _controller = VideoPlayerController.asset('assets/videos/videomercedes.mp4')
       ..initialize().then((_) {
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {});
@@ -26,7 +24,7 @@ class _BillBoardPageState extends State<BillBoardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.secondaryColor,
+        backgroundColor: Colors.secondaryColor,
         appBar: AppBar(
           title: const Text(
             "AutoSpecs",
@@ -42,11 +40,17 @@ class _BillBoardPageState extends State<BillBoardPage> {
           child: Column(
             children: [
               Container(
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(16.0), ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16.0),
+                ),
                 alignment: Alignment.center,
                 height: 100,
                 margin: EdgeInsets.all(5),
-                child: Text('Las ultimas novedades',style:GoogleFonts.montserrat(fontSize: 30, color: Colors.mainColor),),
+                child: Text(
+                  'Las ultimas novedades',
+                  style: GoogleFonts.montserrat(
+                      fontSize: 30, color: Colors.mainColor),
+                ),
               ),
               Center(
                 child: _controller.value.isInitialized
@@ -56,9 +60,15 @@ class _BillBoardPageState extends State<BillBoardPage> {
                       )
                     : Container(),
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               Container(
-                child: Text('Descubre las últimas novedades sobre este impresionante y magnifico Mercedes Clase A.\n \n Más Deportivo\n\n Más Elegante\n\n Más Mercedes',style: GoogleFonts.montserrat(color: Colors.mainColor, fontSize: 17),),
+                child: Text(
+                  'Descubre las últimas novedades sobre este impresionante y magnifico Mercedes Clase A.\n \n Más Deportivo\n\n Más Elegante\n\n Más Mercedes',
+                  style: GoogleFonts.montserrat(
+                      color: Colors.mainColor, fontSize: 17),
+                ),
               )
             ],
           ),

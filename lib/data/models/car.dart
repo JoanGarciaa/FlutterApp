@@ -20,7 +20,6 @@ class Car {
       required this.torque,
       required this.weight});
 
-
   Car.fromMap(Map<String, dynamic> map) {
     id = map['id'];
     brand = map['brand'];
@@ -36,7 +35,6 @@ class Car {
     weight = map['weight'];
     favorite = map['favorite'];
   }
-
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{

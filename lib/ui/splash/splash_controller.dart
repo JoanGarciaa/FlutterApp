@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SplashController extends ChangeNotifier{
+class SplashController extends ChangeNotifier {
   bool isLoggedIn = false;
   String userId = '';
 
@@ -18,8 +18,7 @@ class SplashController extends ChangeNotifier{
       userId = savedUserId;
       Navigator.pushReplacementNamed(context, '/');
       notifyListeners();
-    }
-    else{
+    } else {
       Navigator.pushReplacementNamed(context, '/login');
     }
   }

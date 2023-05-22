@@ -3,16 +3,16 @@ import 'package:flutter_app/data/provider/car_repository.dart';
 
 import '../../../data/models/car.dart';
 
-class FavoritesController extends ChangeNotifier{
-
+class FavoritesController extends ChangeNotifier {
   final repository = CarRepository();
 
   int _currentIndex = 1;
+
   int get currentIndex => _currentIndex;
   bool isClicked = false;
   String formattedPrice = "";
 
-  set currentIndex(int value){
+  set currentIndex(int value) {
     _currentIndex = value;
   }
 
@@ -21,12 +21,11 @@ class FavoritesController extends ChangeNotifier{
     notifyListeners();
   }
 
-  Future getValueGarage() async{
+  Future getValueGarage() async {
     return await repository.getTotalValueGarage();
   }
 
-  Future getMyFavoriteCars() async{
+  Future getMyFavoriteCars() async {
     return await repository.getMyFavoriteCars();
   }
-
 }

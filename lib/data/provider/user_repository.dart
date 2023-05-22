@@ -1,28 +1,29 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../models/user_data.dart';
 import '../services/firebase_services.dart';
-class UserRepository extends ChangeNotifier{
+
+class UserRepository extends ChangeNotifier {
   String USER_DB = 'users';
 
   Future<UserData> getUser() async {
     late UserData user;
     User? currentUser = FirebaseAuth.instance.currentUser;
-    await FirebaseFirestore.instance.collection(USER_DB).where('email', isEqualTo: currentUser?.email).get().then((documents) {
+    await FirebaseFirestore.instance
+        .collection(USER_DB)
+        .where('email', isEqualTo: currentUser?.email)
+        .get()
+        .then((documents) {
       for (QueryDocumentSnapshot<Map<String, dynamic>> documentSnapshot
-      in documents.docs) {
+          in documents.docs) {
         user = UserData.fromMap(documentSnapshot.data());
         print(user.email);
       }
     });
     return user;
   }
-
-
-
 
   Future<List> getUsers() async {
     List user = [];
@@ -63,5 +64,4 @@ class UserRepository extends ChangeNotifier{
   Future<void> deleteUser(String uid) async {
     await db.collection('users').doc(uid).delete();
   }
-
 }

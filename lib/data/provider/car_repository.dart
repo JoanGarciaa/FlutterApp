@@ -11,22 +11,26 @@ class CarRepository extends ChangeNotifier {
   Future<List<Car>> getAllCarsForSearch(String? brand) async {
     List<Car> carList = [];
 
-      if (brand == "Ver todos" || brand == "") {
-        await FirebaseFirestore.instance.collection(CAR_DB).get().then((value) {
-          for (QueryDocumentSnapshot<Map<String, dynamic>> documentSnapshot
-              in value.docs) {
-            carList.add(Car.fromMap(documentSnapshot.data()));
-          }
-        });
-      } else {
-        await FirebaseFirestore.instance.collection(CAR_DB)
-          .where('brand', isEqualTo: brand).get().then((value) {
-            for (QueryDocumentSnapshot<Map<String, dynamic>> documentSnapshot
-                in value.docs) {
-              carList.add(Car.fromMap(documentSnapshot.data()));
-            }
-          });
-      };
+    if (brand == "Ver todos" || brand == "") {
+      await FirebaseFirestore.instance.collection(CAR_DB).get().then((value) {
+        for (QueryDocumentSnapshot<Map<String, dynamic>> documentSnapshot
+            in value.docs) {
+          carList.add(Car.fromMap(documentSnapshot.data()));
+        }
+      });
+    } else {
+      await FirebaseFirestore.instance
+          .collection(CAR_DB)
+          .where('brand', isEqualTo: brand)
+          .get()
+          .then((value) {
+        for (QueryDocumentSnapshot<Map<String, dynamic>> documentSnapshot
+            in value.docs) {
+          carList.add(Car.fromMap(documentSnapshot.data()));
+        }
+      });
+    }
+    ;
 
     return carList;
   }
@@ -38,7 +42,8 @@ class CarRepository extends ChangeNotifier {
     if (brand == "Ver todos" || brand == "") {
       QuerySnapshot queryUser = await collectionReferenceUser.get();
       queryUser.docs.forEach((element) {
-        final Map<String, dynamic> data = element.data() as Map<String, dynamic>;
+        final Map<String, dynamic> data =
+            element.data() as Map<String, dynamic>;
         Car car = Car(
             id: element.id,
             brand: data['brand'],
@@ -57,9 +62,10 @@ class CarRepository extends ChangeNotifier {
       });
     } else {
       QuerySnapshot queryUser =
-      await collectionReferenceUser.where('brand', isEqualTo: brand).get();
+          await collectionReferenceUser.where('brand', isEqualTo: brand).get();
       queryUser.docs.forEach((element) {
-        final Map<String, dynamic> data = element.data() as Map<String, dynamic>;
+        final Map<String, dynamic> data =
+            element.data() as Map<String, dynamic>;
         Car car = Car(
             id: element.id,
             brand: data['brand'],
@@ -99,7 +105,8 @@ class CarRepository extends ChangeNotifier {
 
     queryCarList.forEach((element) {
       element?.docs.forEach((element) {
-        final Map<String, dynamic> data = element.data() as Map<String, dynamic>;
+        final Map<String, dynamic> data =
+            element.data() as Map<String, dynamic>;
         Car car = Car(
             id: element.id,
             brand: data['brand'],
@@ -142,7 +149,8 @@ class CarRepository extends ChangeNotifier {
 
     queryCarList.forEach((element) {
       element?.docs.forEach((element) {
-        final Map<String, dynamic> data = element.data() as Map<String, dynamic>;
+        final Map<String, dynamic> data =
+            element.data() as Map<String, dynamic>;
         Car car = Car(
             id: element.id,
             brand: data['brand'],
@@ -198,5 +206,4 @@ class CarRepository extends ChangeNotifier {
     });
     return cars;
   }
-
 }

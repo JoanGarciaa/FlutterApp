@@ -65,15 +65,12 @@ class CardCar extends StatelessWidget {
                                     child: Text(
                                       cars[index].model,
                                       style: const TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.black),
+                                          fontSize: 16, color: Colors.black),
                                     ),
                                   ),
                                   GestureDetector(
-                                    child: Icon(
-                                        Icons.favorite,
-                                        color: Colors.red
-                                    ),
+                                    child:
+                                        Icon(Icons.favorite, color: Colors.red),
                                     onTap: () {},
                                   )
                                 ],

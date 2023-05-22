@@ -14,6 +14,7 @@ class SelectedCarPage extends StatefulWidget {
 
 class _SelectedCarPageState extends State<SelectedCarPage> {
   Car? car1;
+
   @override
   Widget build(BuildContext context) {
     final Map arguments = ModalRoute.of(context)!.settings.arguments as Map;
@@ -53,15 +54,17 @@ class _SelectedCarPageState extends State<SelectedCarPage> {
               height: 100,
               child: Center(
                   child: Text(
-                    'Escoje un coche',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 30,
-                        letterSpacing: 2,
-                        fontFamily: AppFonts.roboto),
-                  )),
+                'Escoje un coche',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 30,
+                    letterSpacing: 2,
+                    fontFamily: AppFonts.roboto),
+              )),
             ),
-            SelectCar(car1: car1!,)
+            SelectCar(
+              car1: car1!,
+            )
           ],
         ),
       ),

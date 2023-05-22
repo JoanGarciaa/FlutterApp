@@ -10,13 +10,10 @@ FirebaseFirestore db = FirebaseFirestore.instance;
 User? currentUser = FirebaseAuth.instance.currentUser;
 
 bool _isLiked = false;
-bool get isLiked  => _isLiked;
 
-class FirebaseRepository extends ChangeNotifier{
+bool get isLiked => _isLiked;
 
-
-
-}
+class FirebaseRepository extends ChangeNotifier {}
 
 Future<List<Car>> getAllCars() async {
   List<Car> cars = [];
@@ -42,8 +39,6 @@ Future<List<Car>> getAllCars() async {
   });
   return cars;
 }
-
-
 
 Future<Car?> getCar(String? id) async {
   Car? car;
@@ -96,13 +91,9 @@ Future<void> favoriteCar(String idCar, String? idUser) async {
     _isLiked = false;
   }
 
-  await db.collection('cars').doc(idCar).update({'favorite':true});
+  await db.collection('cars').doc(idCar).update({'favorite': true});
   await db.collection('users').doc(idUser).update({'favorite_cars': carList});
 }
-
-
-
-
 
 Future<void> addCar() async {
   String id = "1012";

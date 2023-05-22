@@ -21,8 +21,7 @@ class RoundedButtonPayment extends StatelessWidget {
                       padding: const EdgeInsets.all(16),
                       color: Colors.grey[800],
                       child: Column(
-                          crossAxisAlignment:
-                          CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
                               height: 10,
@@ -31,17 +30,15 @@ class RoundedButtonPayment extends StatelessWidget {
                               child: Row(children: [
                                 Expanded(
                                     child: Container(
-                                      child: Text(
-                                        'PREMIUM AUTOSPECS',
-                                        style: GoogleFonts.montserrat(
-                                            fontSize: 20,
-                                            color: Colors.premium),
-                                      ),
-                                    )),
+                                  child: Text(
+                                    'PREMIUM AUTOSPECS',
+                                    style: GoogleFonts.montserrat(
+                                        fontSize: 20, color: Colors.premium),
+                                  ),
+                                )),
                                 Text(
                                   '1,99€',
-                                  style: GoogleFonts.montserrat(
-                                      fontSize: 25),
+                                  style: GoogleFonts.montserrat(fontSize: 25),
                                 ),
                               ]),
                             ),
@@ -60,7 +57,8 @@ class RoundedButtonPayment extends StatelessWidget {
                                   height: 30,
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      Navigator.pushReplacementNamed(context, '/payment');
+                                      Navigator.pushReplacementNamed(
+                                          context, '/payment');
                                     },
                                     child: Text('Pasar a pagos'),
                                   )),

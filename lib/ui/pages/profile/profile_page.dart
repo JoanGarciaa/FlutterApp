@@ -113,7 +113,10 @@ class _ProfilePageState extends State<ProfilePage> {
                             color: Colors.black,
                           ),
                         ),
-                        Icon(user.premium ? Icons.star : null, color: Colors.premium,)
+                        Icon(
+                          user.premium ? Icons.star : null,
+                          color: Colors.premium,
+                        )
                       ],
                     ),
                     const SizedBox(height: 10.0),
@@ -129,20 +132,24 @@ class _ProfilePageState extends State<ProfilePage> {
                       color: Colors.terciaryColor,
                     ),
                     const SizedBox(height: 20.0),
-                    _buildListTile(context, Icons.add_card_sharp,
-                        user.premium ? 'Ya eres premium' : 'Hazme premium', '/premium',user),
+                    _buildListTile(
+                        context,
+                        Icons.add_card_sharp,
+                        user.premium ? 'Ya eres premium' : 'Hazme premium',
+                        '/premium',
+                        user),
                     const SizedBox(height: 10.0),
                     _buildListTile(context, Icons.person_outline,
-                        'Crea para la comunidad', '/create_car',user),
+                        'Crea para la comunidad', '/create_car', user),
                     const SizedBox(height: 10.0),
-                    _buildListTile(
-                        context, Icons.favorite, 'Mis favoritos', '/favorites',user),
+                    _buildListTile(context, Icons.favorite, 'Mis favoritos',
+                        '/favorites', user),
                     const SizedBox(height: 10.0),
                     _buildListTile(context, Icons.star,
-                        'Trailers Nuevos Coches', '/billboard',user),
+                        'Trailers Nuevos Coches', '/billboard', user),
                     const SizedBox(height: 10.0),
                     _buildListTile(context, Icons.person_outline,
-                        'Cerrar sesión', '/login',user),
+                        'Cerrar sesión', '/login', user),
                     const Divider(
                       height: 5,
                       color: Colors.terciaryColor,
@@ -167,8 +174,8 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _buildListTile(
-      BuildContext context, IconData icon, String title, String route, UserData user) {
+  Widget _buildListTile(BuildContext context, IconData icon, String title,
+      String route, UserData user) {
     return ListTile(
       leading: Icon(
         icon,
@@ -189,7 +196,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   height: 50,
                   color: Colors.red,
                   child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                    style:
+                        ElevatedButton.styleFrom(backgroundColor: Colors.red),
                     onPressed: () {
                       _controllerSplash.deleteUserSession();
                       Navigator.pushNamedAndRemoveUntil(
@@ -202,13 +210,13 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 );
               });
-        }else if(title == 'Ya eres premium'){
+        } else if (title == 'Ya eres premium') {
           Methods.toast('Ya eres premium', context);
-        }
-        else if(title == 'Crea para la comunidad'){
-          user.premium ?  Navigator.pushNamed(context, route) : Methods.toast('Necesitas ser premium', context);
-        }
-        else {
+        } else if (title == 'Crea para la comunidad') {
+          user.premium
+              ? Navigator.pushNamed(context, route)
+              : Methods.toast('Necesitas ser premium', context);
+        } else {
           Navigator.pushNamed(context, route);
         }
       },

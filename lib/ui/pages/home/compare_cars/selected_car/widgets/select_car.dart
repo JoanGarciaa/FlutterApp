@@ -5,6 +5,7 @@ import '../../../../../../data/services/firebase_services.dart';
 
 class SelectCar extends StatelessWidget {
   final Car car1;
+
   const SelectCar({Key? key, required this.car1}) : super(key: key);
 
   @override
@@ -27,10 +28,7 @@ class SelectCar extends StatelessWidget {
                     child: GestureDetector(
                       onTap: () async {
                         await Navigator.pushNamed(context, '/compare_car',
-                            arguments: {
-                              "car2": cars[index],
-                              "car": car1
-                            });
+                            arguments: {"car2": cars[index], "car": car1});
                       },
                       child: Container(
                         height: 200,
@@ -66,8 +64,7 @@ class SelectCar extends StatelessWidget {
                                     child: Text(
                                       cars[index].model,
                                       style: const TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.black),
+                                          fontSize: 16, color: Colors.black),
                                     ),
                                   ),
                                   GestureDetector(
@@ -78,7 +75,8 @@ class SelectCar extends StatelessWidget {
                                           : Colors.grey,
                                     ),
                                     onTap: () {
-                                      favoriteCar(cars[index].id, currentUser?.email);
+                                      favoriteCar(
+                                          cars[index].id, currentUser?.email);
                                     },
                                   )
                                 ],

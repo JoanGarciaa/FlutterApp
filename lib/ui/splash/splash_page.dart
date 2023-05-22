@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/ui/splash/splash_controller.dart';
 import 'package:lottie/lottie.dart';
+
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
 
@@ -37,11 +38,13 @@ class _SplashPageState extends State<SplashPage> {
       color: Colors.splashColor,
       child: Column(
         children: [
-          SizedBox(height: 400,),
+          SizedBox(
+            height: 400,
+          ),
           Center(
             child: Container(
-              child:
-              Lottie.asset('assets/lottie/carsplash.json', width: 300, height: 100),
+              child: Lottie.asset('assets/lottie/carsplash.json',
+                  width: 300, height: 100),
             ),
           ),
         ],
@@ -49,4 +52,3 @@ class _SplashPageState extends State<SplashPage> {
     );
   }
 }
-

@@ -71,13 +71,29 @@ class _PaymentPageState extends State<PaymentPage> {
                 key: _formKey,
                 child: Column(
                   children: [
-                    TextFormFieldPayment(label: 'Nombre del titular', valueError: 'Por favor ingresa el nombre de tu tarjeta de crédito',),
+                    TextFormFieldPayment(
+                      label: 'Nombre del titular',
+                      valueError:
+                          'Por favor ingresa el nombre de tu tarjeta de crédito',
+                    ),
                     const SizedBox(height: 16),
-                    TextFormFieldPayment(label: 'Número de tarjeta', valueError: 'Por favor ingresa el número de tu tarjeta de crédito',),
+                    TextFormFieldPayment(
+                      label: 'Número de tarjeta',
+                      valueError:
+                          'Por favor ingresa el número de tu tarjeta de crédito',
+                    ),
                     const SizedBox(height: 16),
-                    TextFormFieldPayment(label: 'Fecha de expiración (MM/YY)', valueError: 'Por favor ingresa la fecha de expiración de tu tarjeta de crédito',),
+                    TextFormFieldPayment(
+                      label: 'Fecha de expiración (MM/YY)',
+                      valueError:
+                          'Por favor ingresa la fecha de expiración de tu tarjeta de crédito',
+                    ),
                     const SizedBox(height: 16),
-                    TextFormFieldPayment(label: 'Código de seguridad', valueError: 'Por favor ingresa el codigo de seguridad de tu tarjeta de crédito',),
+                    TextFormFieldPayment(
+                      label: 'Código de seguridad',
+                      valueError:
+                          'Por favor ingresa el codigo de seguridad de tu tarjeta de crédito',
+                    ),
                   ],
                 ),
               ),
@@ -91,7 +107,9 @@ class _PaymentPageState extends State<PaymentPage> {
                       _controller.userPremium();
                       await Future.delayed(Duration(seconds: 2));
                       Navigator.pushReplacementNamed(context, '/');
-                      Methods.toast("Felicidades, acabas de adquirir el premium, ya puedes utilizar todas las funciones", context);
+                      Methods.toast(
+                          "Felicidades, acabas de adquirir el premium, ya puedes utilizar todas las funciones",
+                          context);
                     }
                   },
                   child: const Padding(

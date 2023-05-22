@@ -23,14 +23,12 @@ class _HomePageState extends State<HomePage> {
   UserData? user;
   bool isFavoriteSelected = false;
 
-
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int currentIndex = 0;
   Car? car;
   List<bool> favoriteCars = [];
 
   final _controller = HomeController();
-
 
   @override
   Widget build(BuildContext context) {
@@ -40,22 +38,33 @@ class _HomePageState extends State<HomePage> {
         gap: 8,
         tabBackgroundColor: Colors.mainColor,
         tabs: const [
-          GButton(icon: Icons.home,text: 'Home',),
-          GButton(icon: Icons.favorite,text: 'Favoritos'),
-          GButton(icon: Icons.search,text: 'Buscar', ),
-          GButton(icon: Icons.person,text: 'Perfil',),
+          GButton(
+            icon: Icons.home,
+            text: 'Home',
+          ),
+          GButton(icon: Icons.favorite, text: 'Favoritos'),
+          GButton(
+            icon: Icons.search,
+            text: 'Buscar',
+          ),
+          GButton(
+            icon: Icons.person,
+            text: 'Perfil',
+          ),
         ],
         selectedIndex: currentIndex,
-        onTabChange: (index){
-            setState(() {
-              currentIndex = index;
-            });
+        onTabChange: (index) {
+          setState(() {
+            currentIndex = index;
+          });
           print(index);
-          if(currentIndex == 1){
+          if (currentIndex == 1) {
             Navigator.pushNamed(context, '/favorites');
-          }if(currentIndex == 2){
+          }
+          if (currentIndex == 2) {
             Navigator.pushNamed(context, '/search');
-          }if(currentIndex == 3){
+          }
+          if (currentIndex == 3) {
             Navigator.pushNamed(context, '/profile');
           }
         },
@@ -94,117 +103,118 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  height: 100,
-                  child: const Center(
-                      child: Text(
-                        'LOS MÁS BUSCADOS',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 30,
-                            letterSpacing: 2,
-                            fontFamily: AppFonts.roboto),
-                      )),
-                ),
-                Container(
-                    height: 500,
-                    child: FutureBuilder(
-                      future: _controller.getCarsHome(),
-                      builder: ((context, snapshot) {
-                        if (snapshot.hasData) {
-                          // isFavoriteSelected = car?.favorite ?? false;
-                          List<Car> cars = snapshot.data;
-                          return ListView.builder(
-                            itemCount: 6,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              return Card(
-                                elevation: 5.0,
-                                shadowColor: Colors.terciaryColor,
-                                key: Key(cars[index].id),
-                                child: GestureDetector(
-                                  onTap: () async {
-                                    await Navigator.pushNamed(context, '/info_car',
-                                        arguments: {
-                                          "car": cars[index],
-                                        });
-                                    setState(() {});
-                                  },
-                                  child: Container(
-                                    height: 200,
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      image: DecorationImage(
-                                        image: NetworkImage(cars[index].image),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(16.0),
-                                          child: Text(
-                                            cars[index].brand,
-                                            style: const TextStyle(
-                                                fontSize: 24,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                        Container(
-                                          color: Colors.white,
-                                          width: double.infinity,
-                                          height: 45,
-                                          child: Row(
-                                            children: [
-                                              Expanded(
-                                                child: Text(
-                                                  cars[index].model,
-                                                  style: const TextStyle(
-                                                      fontSize: 16,
-                                                      color: Colors.black),
-                                                ),
-                                              ),
-                                              GestureDetector(
-                                                child: Icon(
-                                                  Icons.favorite,
-                                                  color: (cars[index].favorite == true || isFavoriteSelected )
-                                                      ? Colors.red
-                                                      : Colors.grey,
-                                                ),
-                                                onTap: () {
-                                                  // favoriteCar(cars[index].id, currentUser?.email);
-                                                  // setState(() {
-                                                  //   isFavoriteSelected = true;
-                                                  // });
-                                                },
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+        child: Column(
+          children: [
+            Container(
+              height: 100,
+              child: const Center(
+                  child: Text(
+                'LOS MÁS BUSCADOS',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 30,
+                    letterSpacing: 2,
+                    fontFamily: AppFonts.roboto),
+              )),
+            ),
+            Container(
+                height: 500,
+                child: FutureBuilder(
+                  future: _controller.getCarsHome(),
+                  builder: ((context, snapshot) {
+                    if (snapshot.hasData) {
+                      // isFavoriteSelected = car?.favorite ?? false;
+                      List<Car> cars = snapshot.data;
+                      return ListView.builder(
+                        itemCount: 6,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            elevation: 5.0,
+                            shadowColor: Colors.terciaryColor,
+                            key: Key(cars[index].id),
+                            child: GestureDetector(
+                              onTap: () async {
+                                await Navigator.pushNamed(context, '/info_car',
+                                    arguments: {
+                                      "car": cars[index],
+                                    });
+                                setState(() {});
+                              },
+                              child: Container(
+                                height: 200,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  image: DecorationImage(
+                                    image: NetworkImage(cars[index].image),
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
-                              );
-                            },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Text(
+                                        cars[index].brand,
+                                        style: const TextStyle(
+                                            fontSize: 24,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    Container(
+                                      color: Colors.white,
+                                      width: double.infinity,
+                                      height: 45,
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              cars[index].model,
+                                              style: const TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.black),
+                                            ),
+                                          ),
+                                          GestureDetector(
+                                            child: Icon(
+                                              Icons.favorite,
+                                              color: (cars[index].favorite ==
+                                                          true ||
+                                                      isFavoriteSelected)
+                                                  ? Colors.red
+                                                  : Colors.grey,
+                                            ),
+                                            onTap: () {
+                                              // favoriteCar(cars[index].id, currentUser?.email);
+                                              // setState(() {
+                                              //   isFavoriteSelected = true;
+                                              // });
+                                            },
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                           );
-                        }else if(snapshot.hasError){
-                          return Text("Error: ${snapshot.error}");
-                        }
-                        else {
-                          return const Center(child: CircularProgressIndicator());
-                        }
-                      }),
-                    ))
-              ],
-            ),
-          ),
+                        },
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text("Error: ${snapshot.error}");
+                    } else {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                  }),
+                ))
+          ],
+        ),
+      ),
     );
   }
 }

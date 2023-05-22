@@ -10,18 +10,23 @@ import '../../../../data/services/firebase_services.dart';
 class InfoCarController extends ChangeNotifier {
   String USER_DB = 'users';
   bool _isLiked = false;
+
   bool get isLiked => _isLiked;
 
-  void set isLiked(bool value){
+  void set isLiked(bool value) {
     value = isLiked;
   }
 
   Future<UserData> getUser() async {
     late UserData user;
     User? currentUser = FirebaseAuth.instance.currentUser;
-    await FirebaseFirestore.instance.collection(USER_DB).where('email', isEqualTo: currentUser?.email).get().then((documents) {
+    await FirebaseFirestore.instance
+        .collection(USER_DB)
+        .where('email', isEqualTo: currentUser?.email)
+        .get()
+        .then((documents) {
       for (QueryDocumentSnapshot<Map<String, dynamic>> documentSnapshot
-      in documents.docs) {
+          in documents.docs) {
         user = UserData.fromMap(documentSnapshot.data());
         print(user.email);
       }
@@ -29,7 +34,7 @@ class InfoCarController extends ChangeNotifier {
     return user;
   }
 
-  void afterFistLayout(){
+  void afterFistLayout() {
     // isFavoriteCar();
   }
 
@@ -98,6 +103,9 @@ class InfoCarController extends ChangeNotifier {
       notifyListeners();
     }
 
-    await db.collection('users').doc(currentUser!.email).update({'favorite_cars': carList});
+    await db
+        .collection('users')
+        .doc(currentUser!.email)
+        .update({'favorite_cars': carList});
   }
 }

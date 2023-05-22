@@ -5,18 +5,19 @@ import '../../../../../data/models/car.dart';
 class ItemCarSearch extends StatelessWidget {
   final List<Car> cars;
   final int index;
-  const ItemCarSearch({Key? key, required this.cars, required this.index}) : super(key: key);
+
+  const ItemCarSearch({Key? key, required this.cars, required this.index})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
+    return Container(
       height: 200,
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         image: DecorationImage(
-          image: NetworkImage(
-              cars[index].image),
+          image: NetworkImage(cars[index].image),
           fit: BoxFit.cover,
         ),
       ),
@@ -43,12 +44,9 @@ class ItemCarSearch extends StatelessWidget {
                 Expanded(
                   child: Text(
                     cars[index].model,
-                    style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.black),
+                    style: const TextStyle(fontSize: 16, color: Colors.black),
                   ),
                 ),
-
               ],
             ),
           ),

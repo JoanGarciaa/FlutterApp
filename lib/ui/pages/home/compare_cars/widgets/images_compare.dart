@@ -6,7 +6,9 @@ import '../../../../../data/models/car.dart';
 class ImagesCompare extends StatelessWidget {
   final Car? car1;
   final Car? car2;
-  const ImagesCompare({Key? key, required this.car1, required this.car2}) : super(key: key);
+
+  const ImagesCompare({Key? key, required this.car1, required this.car2})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -84,10 +86,9 @@ class ImagesCompare extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  Navigator.pushNamed(context, '/selected_car',
-                      arguments: {
-                        "car": car1,
-                      });
+                  Navigator.pushNamed(context, '/selected_car', arguments: {
+                    "car": car1,
+                  });
                 },
               ),
             ],

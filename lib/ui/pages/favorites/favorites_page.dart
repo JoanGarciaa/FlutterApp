@@ -94,12 +94,14 @@ class _FavoritesPageState extends State<FavoritesPage> {
                       int? value = snapshot.data;
                       String formattedPrices = value.toString();
                       if (formattedPrices.length >= 7) {
-                        _controller.formattedPrice = formattedPrices.replaceAllMapped(
-                            RegExp(r'^(\d{1,3})(\d{3})(\d{3})$'),
+                        _controller.formattedPrice =
+                            formattedPrices.replaceAllMapped(
+                                RegExp(r'^(\d{1,3})(\d{3})(\d{3})$'),
                                 (Match m) => '${m[1]}.${m[2]}.${m[3]}');
                       } else {
-                        _controller.formattedPrice = formattedPrices.replaceAllMapped(
-                            RegExp(r'^(\d{1,3})(\d{3})+$'),
+                        _controller.formattedPrice =
+                            formattedPrices.replaceAllMapped(
+                                RegExp(r'^(\d{1,3})(\d{3})+$'),
                                 (Match m) => '${m[1]}.${m[2]}');
                       }
                       return Center(

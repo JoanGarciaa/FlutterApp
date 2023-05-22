@@ -14,9 +14,9 @@ class FormCreateCar extends StatelessWidget {
         Container(
           child: const Center(
               child: Text(
-                'Enseñanos que sabes',
-                style: TextStyle(fontSize: 26, letterSpacing: 1.0),
-              )),
+            'Enseñanos que sabes',
+            style: TextStyle(fontSize: 26, letterSpacing: 1.0),
+          )),
         ),
         const SizedBox(
           height: 30,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/ui/pages/home/info_cars/info_car_controller.dart';
 import 'package:flutter_app/ui/pages/home/info_cars/widgets/car_specs.dart';
 import 'package:flutter_app/ui/pages/home/info_cars/widgets/like_button.dart';
+import 'package:flutter_app/utils/style/font_style.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -174,10 +175,7 @@ class _InfoCarPageState extends State<InfoCarPage> {
                     const SizedBox(height: 8),
                     Text(
                       car!.model,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                      ),
+                      style: FontStyle.text16,
                     ),
                     const SizedBox(height: 12),
                     const Text(
@@ -189,31 +187,15 @@ class _InfoCarPageState extends State<InfoCarPage> {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Text(
-                      "Potencia: ${car!.cv.toString()} cv",
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                      ),
-                    ),
+                    Text("Potencia: ${car!.cv.toString()} cv",
+                        style: FontStyle.text16),
                     const SizedBox(height: 8),
-                    Text(
-                      "Motor: ${car!.engine.toString()}",
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                      ),
-                    ),
+                    Text("Motor: ${car!.engine.toString()}",
+                        style: FontStyle.text16),
                     const SizedBox(height: 8),
                     Row(
                       children: [
-                        const Text(
-                          'Velocidad máxima:',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                          ),
-                        ),
+                        Text('Velocidad máxima:', style: FontStyle.text16),
                         Container(
                           width: 200,
                           child: LinearPercentIndicator(

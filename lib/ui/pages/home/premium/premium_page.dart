@@ -12,7 +12,6 @@ class PremiumPage extends StatefulWidget {
 }
 
 class _PremiumPageState extends State<PremiumPage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,9 +42,9 @@ class _PremiumPageState extends State<PremiumPage> {
             ),
             InfoFunctions(),
             Container(
-                height: 50,
-                width: 110,
-                child: RoundedButtonPayment(),
+              height: 50,
+              width: 110,
+              child: RoundedButtonPayment(),
             )
           ],
         ),

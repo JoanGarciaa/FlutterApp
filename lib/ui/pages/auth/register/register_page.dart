@@ -62,7 +62,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Text(
                 'REGISTRO',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 30, letterSpacing: 2,fontFamily: AppFonts.roboto),
+                style: TextStyle(
+                    fontSize: 30,
+                    letterSpacing: 2,
+                    fontFamily: AppFonts.roboto),
               )),
             ),
             Container(
@@ -90,12 +93,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.terciaryColor),
+                          borderSide: BorderSide(color: Colors.terciaryColor),
                         ),
                         labelText: "Contraseña",
-                        labelStyle: TextStyle(color: Colors.grey)
-                    ),
+                        labelStyle: TextStyle(color: Colors.grey)),
                   ),
                   const SizedBox(
                     height: 10,
@@ -128,7 +129,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           border: OutlineInputBorder(),
                           focusedBorder: OutlineInputBorder(
                               borderSide:
-                              BorderSide(color: Colors.terciaryColor)),
+                                  BorderSide(color: Colors.terciaryColor)),
                           labelText: "Edad",
                           labelStyle: TextStyle(color: Colors.grey)),
                     ),
@@ -146,7 +147,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                       child: DropdownButton<String>(
-                        underline: Container(),
+                          underline: Container(),
                           value: _selectedGender,
                           items: _genders.map((String gender) {
                             return DropdownMenuItem<String>(
@@ -175,7 +176,13 @@ class _RegisterPageState extends State<RegisterPage> {
                   radius: 13,
                   splashColor: Colors.terciaryColor,
                   onPressed: () async {
-                    _controller.createUser(_controllerEmail.text,_controllerPassword.text,_controllerUsername.text,_selectedGender!,int.parse(_controllerYears.text),context);
+                    _controller.createUser(
+                        _controllerEmail.text,
+                        _controllerPassword.text,
+                        _controllerUsername.text,
+                        _selectedGender!,
+                        int.parse(_controllerYears.text),
+                        context);
                   },
                   title: 'Registro',
                   icon: Icons.app_registration,

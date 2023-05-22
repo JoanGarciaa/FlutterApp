@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../simulate_race.dart';
+import '../simulate_race_controller.dart';
 
 class SimulateSpecs extends StatelessWidget {
   final List<Cars> cars;
   final int i;
-  const SimulateSpecs({Key? key, required this.cars, required this.i}) : super(key: key);
+
+  const SimulateSpecs({Key? key, required this.cars, required this.i})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,11 +47,11 @@ class SimulateSpecs extends StatelessWidget {
             ),
             Positioned.fill(
                 child: Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    // '${(cars[i].progress * 100).toStringAsFixed(0)}%',
-                      '${cars[i].speed.toStringAsFixed(0)} KM/H'),
-                ))
+              alignment: Alignment.center,
+              child: Text(
+                  // '${(cars[i].progress * 100).toStringAsFixed(0)}%',
+                  '${cars[i].speed.toStringAsFixed(0)} KM/H'),
+            ))
           ],
         ),
         const SizedBox(height: 20),

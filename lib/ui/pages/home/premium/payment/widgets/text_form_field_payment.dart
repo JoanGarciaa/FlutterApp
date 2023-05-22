@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 class TextFormFieldPayment extends StatelessWidget {
   final String label;
   final String valueError;
-  const TextFormFieldPayment({Key? key, required this.label, required this.valueError}) : super(key: key);
+
+  const TextFormFieldPayment(
+      {Key? key, required this.label, required this.valueError})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

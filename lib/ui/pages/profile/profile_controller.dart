@@ -5,14 +5,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../data/models/user_data.dart';
 
-class ProfileController extends ChangeNotifier{
-
+class ProfileController extends ChangeNotifier {
   final repository = UserRepository();
-
-
 
   Future<UserData?> getUser() async {
     return await repository.getUser();
   }
-
 }

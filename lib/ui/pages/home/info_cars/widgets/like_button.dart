@@ -5,7 +5,9 @@ import 'package:provider/provider.dart';
 class LikeButton extends StatelessWidget {
   final String id;
   final String email;
-  const LikeButton({Key? key, required this.id, required this.email}) : super(key: key);
+
+  const LikeButton({Key? key, required this.id, required this.email})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +16,8 @@ class LikeButton extends StatelessWidget {
     return IconButton(
       onPressed: () {
         controller.isLiked = !controller.isLiked;
-        controller.favoriteCar(id,email);
-        },
+        controller.favoriteCar(id, email);
+      },
       icon: Icon(
         Icons.favorite,
         color: controller.isLiked ? Colors.red : Colors.grey,

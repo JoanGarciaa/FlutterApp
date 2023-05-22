@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/ui/pages/home/compare_cars/compare_car_controller.dart';
 import 'package:flutter_app/ui/pages/home/compare_cars/simulate_race/simulate_race.dart';
+import 'package:flutter_app/ui/pages/home/compare_cars/widgets/builComparasionRow.dart';
 import 'package:flutter_app/ui/pages/home/compare_cars/widgets/compare_specs.dart';
 import 'package:flutter_app/ui/pages/home/compare_cars/widgets/images_compare.dart';
 import 'package:flutter_app/utils/global_widgets/custom_rounded_button.dart';
@@ -47,20 +48,18 @@ class _CompareCarsPageState extends State<CompareCarsPage> {
     if (formattedPrice1.length >= 7) {
       formattedPrice01 = formattedPrice1.replaceAllMapped(
           RegExp(r'^(\d{1,3})(\d{3})(\d{3})$'),
-              (Match m) => '${m[1]}.${m[2]}.${m[3]}');
+          (Match m) => '${m[1]}.${m[2]}.${m[3]}');
     } else {
       formattedPrice01 = formattedPrice1.replaceAllMapped(
-          RegExp(r'^(\d{1,3})(\d{3})+$'),
-              (Match m) => '${m[1]}.${m[2]}');
+          RegExp(r'^(\d{1,3})(\d{3})+$'), (Match m) => '${m[1]}.${m[2]}');
     }
     if (formattedPrice2.length >= 7) {
       formattedPrice02 = formattedPrice2.replaceAllMapped(
           RegExp(r'^(\d{1,3})(\d{3})(\d{3})$'),
-              (Match m) => '${m[1]}.${m[2]}.${m[3]}');
+          (Match m) => '${m[1]}.${m[2]}.${m[3]}');
     } else {
       formattedPrice02 = formattedPrice2.replaceAllMapped(
-          RegExp(r'^(\d{1,3})(\d{3})+$'),
-              (Match m) => '${m[1]}.${m[2]}');
+          RegExp(r'^(\d{1,3})(\d{3})+$'), (Match m) => '${m[1]}.${m[2]}');
     }
     return Scaffold(
       backgroundColor: Colors.mainColor,
@@ -79,135 +78,86 @@ class _CompareCarsPageState extends State<CompareCarsPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.all(16.0),
-            child:ImagesCompare(car1: car1,car2: car2,)
-          ),
+              padding: const EdgeInsets.all(16.0),
+              child: ImagesCompare(
+                car1: car1,
+                car2: car2,
+              )),
           Expanded(
             child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
                   children: [
-                    _buildComparisonRow(
+                    buildComparisonRow(
                       'Precio',
                       '$formattedPrice01 €',
                       car2 != null ? '$formattedPrice02 €' : "X",
                       Colors.deepPurple[900]!,
                     ),
-                    _buildComparisonRow(
+                    buildComparisonRow(
                       'Motor',
                       car1!.engine,
                       car2 != null ? car2!.engine : "X",
                       Colors.deepPurple[900]!,
                     ),
-                    _buildComparisonRow(
+                    buildComparisonRow(
                       'Potencia',
                       '${car1!.cv.toString()} cv',
                       car2 != null ? '${car2!.cv.toString()} cv' : "X",
                       Colors.deepPurple[900]!,
                     ),
-                    _buildComparisonRow(
+                    buildComparisonRow(
                       'Velocidad Máxima',
                       '${car1!.max_speed.toString()} km/h',
                       car2 != null ? '${car2!.max_speed.toString()} km/h' : "X",
                       Colors.deepPurple[900]!,
                     ),
-                    _buildComparisonRow(
+                    buildComparisonRow(
                       'Combustible',
                       car1!.fuel,
                       car2 != null ? car2!.fuel : "X",
                       Colors.deepPurple[900]!,
                     ),
-                    _buildComparisonRow(
+                    buildComparisonRow(
                       'Torque',
                       '${car1!.cv.toString()} Nm',
                       car2 != null ? '${car2!.cv} Nm' : "X",
                       Colors.deepPurple[900]!,
                     ),
-                    const SizedBox(height: 30,),
+                    const SizedBox(
+                      height: 30,
+                    ),
                     SizedBox(
                       height: 50,
                       width: 200,
-                      child: CustomRoundedButtonWithIcon(onPressed: () async {
-                        if(_controller.user.premium){
-                          car2 != null ? await Navigator.pushNamed(context, '/race',
-                              arguments: {
-                                "car": car1,
-                                "car2": car2
-                              }) : Methods.toast("Necesitas que hayan dos coches",context);
-                        }else{
-                          Methods.toast('Necesitas ser premium para acceder a esta funcion', context);
-                        }
-                      }, title: 'Simular Carrera',
-                      icon: Icons.flag,
-                      size: 20,
+                      child: CustomRoundedButtonWithIcon(
+                        onPressed: () async {
+                          if (_controller.user.premium) {
+                            car2 != null
+                                ? await Navigator.pushNamed(context, '/race',
+                                    arguments: {"car": car1, "car2": car2})
+                                : Methods.toast(
+                                    "Necesitas que hayan dos coches", context);
+                          } else {
+                            Methods.toast(
+                                'Necesitas ser premium para acceder a esta funcion',
+                                context);
+                          }
+                        },
+                        title: 'Simular Carrera',
+                        icon: Icons.flag,
+                        size: 20,
                       ),
                     ),
-                    const SizedBox(height: 50,)
+                    const SizedBox(
+                      height: 50,
+                    )
                   ],
                 ),
               ),
             ),
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildComparisonRow(
-      String label, String value1, String value2, Color color) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(child: Text(label, style: const TextStyle(fontSize: 17))),
-          const SizedBox(
-            height: 15,
-          ),
-          Container(
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
-                      child: Center(
-                    child: Text(
-                      value1,
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        color: Colors.grey[800],
-                      ),
-                    ),
-                  )),
-                ),
-                Container(
-                    child: Image.asset(
-                  'assets/images/versus2.png',
-                  width: 24,
-                  height: 24,
-                )),
-                Expanded(
-                    child: Container(
-                  child: Center(
-                    child: Text(
-                      value2,
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        color: color,
-                      ),
-                    ),
-                  ),
-                ))
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          const Divider(
-            height: 5,
-            color: Colors.terciaryColor,
-          )
         ],
       ),
     );

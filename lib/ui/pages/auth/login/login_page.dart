@@ -11,7 +11,6 @@ import '../../../../utils/global_widgets/custom_rounded_button.dart';
 import 'login_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -26,10 +25,6 @@ class _LoginPageState extends State<LoginPage> {
 
   final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +98,8 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   CustomRoundedButtonWithIcon(
                     onPressed: () async {
-                      _controller.loginUser(_controllerEmail.text, _controllerPassword.text, context);
+                      _controller.loginUser(_controllerEmail.text,
+                          _controllerPassword.text, context);
                     },
                     title: 'ENTRAR',
                     icon: Icons.login,
