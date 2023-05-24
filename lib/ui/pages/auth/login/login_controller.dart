@@ -16,10 +16,10 @@ class LoginController extends ChangeNotifier {
     try {
       await Auth().signInWithEmailAndPassword(email, password);
       if (Auth().currentUser?.emailVerified == true) {
-        Methods.toast("Bienvenido $email", context);
         Navigator.pushReplacementNamed(context, '/');
       } else {
-        Methods.toast("Verifica tu correo", context);
+        Navigator.pushReplacementNamed(context, '/');
+        //Methods.toast("Verifica tu correo", context);
       }
     } catch (error) {
       Methods.toast("El usuario no existe", context);

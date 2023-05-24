@@ -166,9 +166,6 @@ class CarRepository extends ChangeNotifier {
             torque: data['torque'],
             weight: data['weight']);
         favoriteCars.add(car);
-        int totalPrices = favoriteCars.fold(
-            0, (previousValue, car) => previousValue + car.price);
-        print(totalPrices);
       });
     });
 

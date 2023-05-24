@@ -45,7 +45,9 @@ class UserRepository extends ChangeNotifier {
       'username': user_data.username,
       'years': user_data.years,
       'sex': user_data.sex,
-      'favorite_cars': user_data.favorite_cars
+      'favorite_cars': user_data.favorite_cars,
+      'premium': false,
+      'image': user_data.image
     });
   }
 

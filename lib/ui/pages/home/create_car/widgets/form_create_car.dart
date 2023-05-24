@@ -3,6 +3,8 @@ import 'package:flutter_app/ui/pages/home/create_car/create_car_controller.dart'
 import 'package:flutter_app/ui/pages/home/create_car/widgets/text_field_create.dart';
 import 'package:flutter_awesome_buttons/flutter_awesome_buttons.dart';
 
+import '../../../../../data/services/firebase_services.dart';
+
 class FormCreateCar extends StatelessWidget {
   const FormCreateCar({Key? key}) : super(key: key);
 
@@ -155,7 +157,9 @@ class FormCreateCar extends StatelessWidget {
         Container(
           child: RoundedButtonWithIcon(
             title: 'Crear coche',
-            onPressed: () {},
+            onPressed: () {
+              addCar(_controller.controllerBrand!.text.toString(),_controller.controllerModel!.text.toString(),int.parse(_controller.controllerCV!.text),_controller.controllerFuel!.text.toString(),int.parse(_controller.controllerMaxSpeed!.text),_controller.controllerEngine!.text.toString(),int.parse(_controller.controllerPrice!.text),int.parse(_controller.controllerNm!.text),int.parse(_controller.controllerWeight!.text),_controller.controllerImage!.text.toString());
+            },
             icon: Icons.add,
             buttonColor: Colors.terciaryColor,
           ),

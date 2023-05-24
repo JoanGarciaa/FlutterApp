@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -95,20 +97,22 @@ Future<void> favoriteCar(String idCar, String? idUser) async {
   await db.collection('users').doc(idUser).update({'favorite_cars': carList});
 }
 
-Future<void> addCar() async {
-  String id = "1012";
-  String brand = "Nissan";
-  String model = "GTR R34";
-  int cv = 400;
-  int max_speed = 0;
-  bool favorite = false;
-  String engine = "RB26DETT";
-  String image =
-      "https://www.autonocion.com/wp-content/uploads/2020/05/Nissan-GT-R-R34-28.jpg";
-  String image2 =
-      "https://www.autonocion.com/wp-content/uploads/2020/05/Nissan-GT-R-R34-28.jpg";
-  String fuel = "Gasoline";
-  int price = 1;
+Future<void> addCar(String brandCar, String modelCar,int cvCar, String fuelCar, int maxSpeedCar, String engineCar, int priceCar, int nmCar, int weightCar, String imageCar  ) async {
+  Random random = Random();
+  int randomNumber = random.nextInt(10001) + 10000;
+  String id = randomNumber.toString();
+  String brand = brandCar;
+  String model = modelCar;
+  int cv = cvCar;
+  String fuel = fuelCar;
+  int max_speed = maxSpeedCar;
+  String engine = engineCar;
+  int price = priceCar;
+  int nm = nmCar;
+  int weight = weightCar;
+  String image = imageCar;
+  bool favorite = true;
+
   await db.collection('cars').doc(id).set({
     'id': id,
     'brand': brand,
@@ -119,7 +123,9 @@ Future<void> addCar() async {
     'engine': engine,
     'fuel': fuel,
     'image': image,
-    'image2': image2,
-    'price': price
+    'price': price,
+    'torque': nm,
+    'weight': weight,
+    'image2': ""
   });
 }

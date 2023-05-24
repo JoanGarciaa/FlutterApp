@@ -24,8 +24,7 @@ class RegisterController {
             username: username,
             years: years,
             favorite_cars: [],
-            image:
-                "https://cdn.autobild.es/sites/navi.axelspringer.es/public/media/image/2018/01/mazda-rx-7_4.jpg",
+            image: "https://cdn.autobild.es/sites/navi.axelspringer.es/public/media/image/2018/01/mazda-rx-7_4.jpg",
             premium: false);
         repository.createUserDB(userData!);
         Methods.toast("Registro con éxito", context);

@@ -179,8 +179,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     _controller.createUser(
                         _controllerEmail.text,
                         _controllerPassword.text,
-                        _controllerUsername.text,
                         _selectedGender!,
+                        _controllerUsername.text,
                         int.parse(_controllerYears.text),
                         context);
                   },
